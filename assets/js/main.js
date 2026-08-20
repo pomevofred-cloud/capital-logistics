@@ -42,6 +42,15 @@
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
     }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
     revealEls.forEach(function (el) { io.observe(el); });
+    /* Reveal anything already in the first screen right away — the observer's
+       first callback can lag on load, which would leave the hero blank. */
+    requestAnimationFrame(function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      revealEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.9 && r.bottom > 0) { el.classList.add("in"); io.unobserve(el); }
+      });
+    });
   }
 
   /* ---------- Animated counters ---------- */
