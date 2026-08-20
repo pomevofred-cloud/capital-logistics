@@ -429,6 +429,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
   .nav__links,.nav__actions{display:none}
   .nav__toggle{display:inline-flex}
   .site-header .nav{height:66px}
+  .site-header .brand__logo{height:40px}
   /* hero: keep image card, let content breathe; stack head + aside */
   .hero{min-height:clamp(460px,58vw,560px)}
   .hero__inner{grid-template-columns:1fr;gap:20px;align-items:end;padding:40px}
@@ -761,7 +762,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .site-header--over:not(.is-solid) .lg-mark{fill:#fff}
 .site-header--over:not(.is-solid) .lg-word{fill:#fff;filter:drop-shadow(0 1px 10px rgba(0,0,0,.25))}
 .site-header--over:not(.is-solid) .lg-sarl{fill:rgba(255,255,255,.72)}
-@media (max-width:640px){.brand__logo{height:44px}}
+@media (max-width:640px){.brand__logo{height:38px}}
 
 /* =========================================================================
    TESTIMONIAL SLIDER — swipeable (scroll-snap), arrows on desktop
