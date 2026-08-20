@@ -264,7 +264,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .tracker__form{display:flex;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:12px}
 .tracker__input{flex:1;display:flex;align-items:center;gap:12px;background:#fff;border-radius:11px;padding:2px 6px 2px 18px}
 .tracker__input svg{color:var(--placeholder);flex:none}
-.tracker__input input{flex:1;border:0;background:none;padding:14px 0;font-size:.9rem;letter-spacing:.02em;color:var(--ink);outline:none}
+.tracker__input input{flex:1;border:0;background:none;padding:14px 0;font-size:1rem;letter-spacing:.02em;color:var(--ink);outline:none}
 .tracker__input input::placeholder{color:var(--placeholder)}
 .tracker__try{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
 .tracker__try .lbl{font-size:var(--fs-mini);letter-spacing:.12em;color:rgba(255,255,255,.55)}
@@ -692,7 +692,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .cform>.lede{margin-top:10px}
 .cform__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
 .field label{font-size:.65625rem;letter-spacing:.06em;color:var(--eyebrow);text-transform:uppercase;display:block;margin-bottom:8px}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:.9375rem;color:var(--ink);background:var(--page);font-family:inherit;transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease)}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:1rem;color:var(--ink);background:var(--page);font-family:inherit;transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,42,194,.1);background:#fff}
 .field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
 .field textarea{resize:vertical;min-height:120px}
@@ -847,3 +847,18 @@ body.nav-open .mobile-menu__list a{opacity:1;transform:none}
 .m-arrow{width:42px;height:42px;border-radius:50%;background:#fff;color:var(--blue);display:grid;place-items:center;flex:none;transition:transform var(--t) var(--ease)}
 .mobile-menu__list a:hover .m-arrow,.mobile-menu__list a:active .m-arrow{transform:translateX(4px)}
 @media (prefers-reduced-motion:reduce){.mobile-menu,.mobile-menu__list a{transition:opacity .2s!important;transform:none!important}}
+
+/* ── mobile: prevent focus-zoom + larger box text (readability) ── */
+@media (max-width:640px){
+  input,select,textarea{font-size:16px}
+  .card__title{font-size:1.15rem}
+  .card__text{font-size:.96875rem;line-height:1.55}
+  .prog-item__title{font-size:1.05rem}
+  .prog-item__text{font-size:.9375rem}
+  .step__title{font-size:1.09375rem}
+  .step__text{font-size:.9375rem}
+  .numbers-list .k{font-size:.9375rem}
+  .numbers-list .v{font-size:1.0625rem}
+  .stat__label{font-size:1.0625rem}
+  .rates__note,.tracker__head .lede{font-size:1rem}
+}
