@@ -224,7 +224,7 @@ h3{font-size:var(--fs-card);line-height:1.25;letter-spacing:-.01em}
 .nav__toggle{display:none;width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;color:var(--ink)}
 .nav__toggle span,.nav__toggle span::before,.nav__toggle span::after{content:"";position:absolute;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform var(--t) var(--ease),opacity var(--t) var(--ease)}
 .nav__toggle span{position:relative}
-.nav__toggle span::before{top:-7px}.nav__toggle span::after{top:7px}
+.nav__toggle span::before{top:-7px;left:0}.nav__toggle span::after{top:7px;left:0}
 body.nav-open .nav__toggle span{background:transparent}
 body.nav-open .nav__toggle span::before{transform:translateY(7px) rotate(45deg)}
 body.nav-open .nav__toggle span::after{transform:translateY(-7px) rotate(-45deg)}
@@ -303,6 +303,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .card--media:hover .card__media img{transform:scale(1.05)}
 .card--media .card__body{padding:var(--pad-card)}
 .card--media .card__title{margin-top:0}
+.card-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,25,0) 34%,rgba(5,8,20,.5) 64%,rgba(3,6,18,.9) 100%)}
 
 /* ---------- process steps ---------- */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-card)}
@@ -429,7 +430,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
   .nav__links,.nav__actions{display:none}
   .nav__toggle{display:inline-flex}
   .site-header .nav{height:66px}
-  .site-header .brand__logo{height:40px}
+  .site-header .brand__logo{height:44px}
   /* hero: keep image card, let content breathe; stack head + aside */
   .hero{min-height:clamp(460px,58vw,560px)}
   .hero__inner{grid-template-columns:1fr;gap:20px;align-items:end;padding:40px}
@@ -762,7 +763,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .site-header--over:not(.is-solid) .lg-mark{fill:#fff}
 .site-header--over:not(.is-solid) .lg-word{fill:#fff;filter:drop-shadow(0 1px 10px rgba(0,0,0,.25))}
 .site-header--over:not(.is-solid) .lg-sarl{fill:rgba(255,255,255,.72)}
-@media (max-width:640px){.brand__logo{height:38px}}
+@media (max-width:640px){.site-header .brand__logo{height:46px}}
 
 /* =========================================================================
    TESTIMONIAL SLIDER — swipeable (scroll-snap), arrows on desktop
@@ -854,6 +855,9 @@ body.nav-open .mobile-menu__list a{opacity:1;transform:none}
   input,select,textarea{font-size:16px}
   .card__title{font-size:1.15rem}
   .card__text{font-size:.96875rem;line-height:1.55}
+  /* media card: give the image room so the overlaid text sits on the dark band */
+  .card--media{min-height:360px}
+  .card-scrim{background:linear-gradient(180deg,rgba(6,10,25,0) 12%,rgba(6,10,25,.35) 34%,rgba(5,8,20,.72) 58%,rgba(3,6,18,.94) 100%)}
   .prog-item__title{font-size:1.05rem}
   .prog-item__text{font-size:.9375rem}
   .step__title{font-size:1.09375rem}
