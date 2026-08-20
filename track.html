@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Track — Capital Logistics</title>
+<meta name="description" content="Real-time visibility into every shipment moving through the Capital Logistics network." />
+<meta name="theme-color" content="#002AC2" />
+<link rel="preload" href="assets/fonts/GoogleSansFlex.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header site-header--over" id="siteHeader">
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="brand" aria-label="Capital Logistics home">
+      <svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg>
+    </a>
+    <div class="nav__links">
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="coverage.html">Coverage</a>
+      <a href="track.html" aria-current="page">Track</a>
+    </div>
+    <span class="nav__spacer"></span>
+    <div class="nav__actions">
+      <a href="mailto:jrodall@clcongo.com" class="nav__email">jrodall@clcongo.com</a>
+      <a href="contact.html" class="btn btn--primary">Get in touch <span class="arrow">↗</span></a>
+    </div>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobilePanel"><span></span></button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobilePanel" aria-label="Menu">
+  <div class="mobile-menu__top">
+    <a href="index.html" class="brand" aria-label="Capital Logistics home"><svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg></a>
+    <button class="mobile-menu__close" id="navClose" aria-label="Close menu"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></svg></button>
+  </div>
+  <nav class="mobile-menu__list">
+    <a href="index.html"><span>Home</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a href="services.html"><span>Service</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a href="about.html"><span>About</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a href="coverage.html"><span>Coverage</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a href="track.html"><span>Tracker</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a href="contact.html"><span>Contact</span><span class="m-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </nav>
+</div>
+
+<main id="main">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="page-hero__media"><img src="assets/img/tracker-1.jpg" alt="Container yard where shipments are scanned and tracked" data-parallax /></div>
+    <div class="page-hero__inner">
+      <h1 class="reveal">Where's your cargo?</h1>
+      <p class="lede reveal" data-delay="100">Real-time visibility into every shipment moving through our network. Enter your tracking number to see current status and full timeline.</p>
+    </div>
+  </section>
+
+  <!-- ============ TRACKING ============ -->
+  <section class="section container">
+    <div class="section-head reveal">
+      <span class="eyebrow">/ Tracking</span>
+      <h2>Enter a tracking number</h2>
+      <p class="lede">Tracking numbers are provided at dispatch, format <strong>CL-YYYY-NNNNNN</strong>. Lost yours? Contact your account manager.</p>
+    </div>
+
+    <form class="track-form reveal" id="trkForm" autocomplete="off">
+      <label class="track-input">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+        <input type="text" id="trkInput" placeholder="CL-2024-000000" aria-label="Tracking number" />
+      </label>
+      <button type="submit" class="btn btn--primary">Track <span class="arrow">↗</span></button>
+    </form>
+    <div class="track-try reveal">
+      <span class="lbl">/ TRY:</span>
+      <button type="button" data-ref="CL-2024-001234">CL-2024-001234</button>
+      <button type="button" data-ref="CL-2024-001235">CL-2024-001235</button>
+      <button type="button" data-ref="CL-2024-001236">CL-2024-001236</button>
+    </div>
+
+    <div class="track-result reveal" id="trkResult">
+      <div class="tracker__meta">
+        <div>
+          <div class="tracker__ref">/ REFERENCE · <span id="trkRef">CL-2024-001234</span></div>
+          <div class="tracker__id" id="trkId">Matadi Port Terminal → Kinshasa Warehouse 03</div>
+        </div>
+        <span class="chip-status"><span class="dot"></span> <span id="trkStatus">IN TRANSIT</span></span>
+      </div>
+      <div class="track-timeline" id="trkTimeline">
+        <div class="tl-step done">Picked up<span class="t">Matadi</span></div>
+        <div class="tl-step done">In transit<span class="t">On corridor</span></div>
+        <div class="tl-step">At customs<span class="t">Clearance</span></div>
+        <div class="tl-step">Out for delivery<span class="t">Kinshasa</span></div>
+        <div class="tl-step">Delivered<span class="t">Signed POD</span></div>
+      </div>
+    </div>
+
+    <!-- embeddable.co widget slot:
+         Generate a Map / World-Clock / Currency widget at https://embeddable.co/free-widgets
+         (sign in required), copy its embed snippet, and paste it inside .widget-slot below. -->
+    <div class="widget-slot reveal" aria-label="Live tracking widget">
+      <span class="wl">/ LIVE MAP WIDGET</span>
+      <!-- PASTE EMBEDDABLE.CO EMBED CODE HERE -->
+      <p style="color:var(--body);font-size:.9rem;margin-top:10px">A live map / route widget from embeddable.co drops in here — sign in, customise, and paste the embed snippet in place of this note.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section container" style="padding-top:0">
+    <div class="section-head reveal">
+      <span class="eyebrow">/ How it works</span>
+      <h2>Visibility, end to end</h2>
+      <p class="lede">Every consignment on our network is scanned, logged, and monitored — from origin handover to signed proof of delivery.</p>
+    </div>
+    <div class="grid grid-3 mt-grid" data-stagger>
+      <div class="step"><span class="step__n" style="background:var(--blue-050);color:var(--blue)">01</span><h3 class="step__title">Scanned at every hub</h3><p class="step__text">Consignments are scanned at pickup and every transit hub — timestamps and location logged automatically.</p></div>
+      <div class="step"><span class="step__n" style="background:var(--blue-050);color:var(--blue)">02</span><h3 class="step__title">Live GPS from the truck</h3><p class="step__text">Every fleet vehicle reports position continuously — you see where cargo is between hubs.</p></div>
+      <div class="step"><span class="step__n" style="background:var(--blue-050);color:var(--blue)">03</span><h3 class="step__title">Alerts on exception</h3><p class="step__text">Delays, re-routing, or clearance holds trigger automatic notifications to your account manager.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <div class="container stack" style="margin-top:clamp(28px,3vw,44px)">
+    <section class="cta-split panel panel--blue reveal">
+      <div>
+        <h2>Have a specific route in mind?</h2>
+        <div class="cta-split__row" style="margin-top:20px">
+          <span class="pill">Tell us origin and destination</span>
+          <span style="color:#fff">On request</span>
+        </div>
+      </div>
+      <div class="cta-split__right">
+        <p class="lede">We'll come back with a plan, price, and start date — usually within one business day.</p>
+        <a href="contact.html" class="btn btn--accent">Request a quote <span class="arrow">↗</span></a>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+    <div class="footer__inner">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div class="footer__badge">
+          <svg class="brand__badge" viewBox="0 0 44 44" fill="none" aria-hidden="true"><rect class="badge-bg" width="44" height="44" rx="10"/><path class="badge-mark" d="M22.80,37.97L8.95,29.95L8.95,13.83L11.50,12.33L19.60,17.06L17.09,18.57L17.09,31.59L17.21,31.72L17.17,31.74L22.80,37.97ZM22.80,37.97L17.17,31.74L28.48,25.22L36.73,29.85L22.80,37.97Z"/><path class="badge-fold" d="M37.25,13.63L29.05,18.41L15.11,10.37L23.28,5.62L37.25,13.63Z"/></svg>
+          <span class="brand__text"><span class="brand__name">Capital Logistics</span><span class="brand__sub">SARL · DR Congo</span></span>
+        </div>
+        <p>A leading transport and logistics enterprise serving the Democratic Republic of Congo and the wider Central African sub-region.</p>
+      </div>
+      <div class="footer__col"><h4>Services</h4><a href="services.html">Road transport</a><a href="services.html">Warehousing</a><a href="services.html">Maritime agency</a><a href="services.html">Customs</a></div>
+      <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="coverage.html">Coverage</a><a href="track.html">Track cargo</a><a href="contact.html">Contact</a></div>
+      <div class="footer__col"><h4>Contact</h4><a href="mailto:jrodall@clcongo.com">jrodall@clcongo.com</a><a href="contact.html">Democratic Republic of Congo</a></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Capital Logistics SARL. All rights reserved.</span>
+      <span class="footer__credit">Build by Duonox</span>
+      <span>Freight · Logistics · Sustainability</span>
+    </div>
+  </div>
+  </footer>
+
+<script>
+(function(){
+  var form=document.getElementById('trkForm'),input=document.getElementById('trkInput'),
+      res=document.getElementById('trkResult'),reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function show(ref){
+    ref=(ref||'').trim().toUpperCase(); if(!ref) ref='CL-2024-001234';
+    var rec=(window.CL_getShipment&&window.CL_getShipment(ref))||(window.CL_defaultShipment?window.CL_defaultShipment():{status:'IN TRANSIT',origin:'Matadi Port Terminal',destination:'Kinshasa Warehouse 03',step:2});
+    document.getElementById('trkRef').textContent=ref;
+    document.getElementById('trkId').textContent=rec.origin+' → '+rec.destination;
+    document.getElementById('trkStatus').textContent=rec.status;
+    var steps=document.querySelectorAll('#trkTimeline .tl-step');
+    steps.forEach(function(el,i){el.classList.toggle('done',i<rec.step);});
+    if(!reduce){res.style.transition='none';res.style.opacity='.45';res.style.transform='translateY(6px)';
+      requestAnimationFrame(function(){res.style.transition='opacity .4s ease, transform .4s ease';res.style.opacity='1';res.style.transform='none';});}
+  }
+  if(form) form.addEventListener('submit',function(e){e.preventDefault();show(input.value);});
+  if(window.CL_ready) window.CL_ready.then(function(){ if(input&&input.value) show(input.value); });
+  document.querySelectorAll('.track-try button').forEach(function(b){
+    b.addEventListener('click',function(){input.value=b.getAttribute('data-ref');show(b.getAttribute('data-ref'));});
+  });
+})();
+</script>
+<!-- Cookie consent -->
+<div class="cookie" id="cookieBanner" role="dialog" aria-label="Cookie consent">
+  <span class="cookie__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
+  <h2 class="cookie__title">Your privacy is important to us</h2>
+  <p class="cookie__text">We process your personal information to measure and improve our sites and services, to assist our campaigns and to provide personalised content. For more information see our <a href="#">Privacy Policy</a>.</p>
+  <div class="cookie__actions">
+    <a href="#" class="cookie__more">More options</a>
+    <button type="button" class="btn btn--primary" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script src="assets/js/tracking-config.js"></script>
+<script src="assets/js/tracking.js"></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
