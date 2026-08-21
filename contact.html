@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://docs.google.com https://script.google.com https://*.googleusercontent.com; form-action 'self'" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>Contact · Capital Logistics</title>
 <meta name="description" content="Quote requests, project enquiries, partner discussions, a single message opens the door. We respond within one business day." />
@@ -162,6 +162,24 @@
   </footer>
 
 <script src="assets/js/contact.js" defer></script>
+<!-- Newsletter -->
+<div class="nl-modal" id="newsletter" role="dialog" aria-modal="true" aria-labelledby="nlTitle" hidden>
+  <div class="nl-modal__backdrop" data-nl-close></div>
+  <div class="nl-card">
+    <button class="nl-card__close" type="button" aria-label="Close" data-nl-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></svg></button>
+    <div class="nl-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m2.5 6.5 9.5 6 9.5-6"/></svg></div>
+    <h2 class="nl-card__title" id="nlTitle">Stay on the network</h2>
+    <p class="nl-card__text">Corridor updates, freight rates, and news from Capital Logistics, straight to your inbox.</p>
+    <form class="nl-form" id="nlForm" novalidate>
+      <input type="email" id="nlEmail" name="email" class="nl-input" placeholder="Enter your email" autocomplete="email" required />
+      <p class="nl-msg" id="nlMsg" role="status" aria-live="polite"></p>
+      <div class="nl-actions">
+        <button type="button" class="nl-btn nl-btn--ghost" data-nl-close>Maybe later</button>
+        <button type="submit" class="nl-btn nl-btn--primary">Subscribe <span class="arrow">&#8594;</span></button>
+      </div>
+    </form>
+  </div>
+</div>
 <!-- Cookie consent -->
 <div class="cookie" id="cookieBanner" role="dialog" aria-label="Cookie consent">
   <span class="cookie__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
@@ -175,6 +193,8 @@
 
 <script src="assets/js/translations.js" defer></script>
 <script src="assets/js/i18n.js" defer></script>
+<script src="assets/js/newsletter-config.js" defer></script>
+<script src="assets/js/newsletter.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
