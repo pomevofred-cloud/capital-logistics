@@ -27,7 +27,9 @@ var NEWS_SHEET = 'Newsletter';   // headers: email | date
 function doGet(e) {
   return HtmlService.createHtmlOutputFromFile('Dashboard')
     .setTitle('Capital Logistics — Admin')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+    // allow the dashboard to be embedded at your own domain (e.g. clcongo.com/admin)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
 // Public POST: only the newsletter sign-up from the website pop-up.

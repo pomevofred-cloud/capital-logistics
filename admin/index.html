@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://script.google.com https://*.googleusercontent.com; connect-src 'self'" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Capital Logistics — Admin</title>
+<style>
+  html,body{margin:0;height:100%;background:#F5F6FA;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#1B2432}
+  #dash{border:0;width:100%;height:100vh;height:100dvh;display:block}
+  .setup{max-width:520px;margin:12vh auto;padding:0 22px;text-align:center}
+  .mk{width:48px;height:48px;border-radius:12px;background:#002AC2;color:#fff;display:inline-grid;place-items:center;font-weight:800;font-size:1.3rem;margin-bottom:16px}
+  .setup h1{font-size:1.3rem;margin:0 0 8px}
+  .setup p{color:#6C7280;line-height:1.6;font-size:.95rem}
+  .setup code{background:#EBEDF3;padding:2px 7px;border-radius:6px;font-size:.9em}
+</style>
+</head>
+<body>
+  <iframe id="dash" title="Capital Logistics admin dashboard" referrerpolicy="no-referrer"></iframe>
+  <div id="notset" class="setup" hidden>
+    <div class="mk">C</div>
+    <h1>Admin not connected yet</h1>
+    <p>Deploy the Apps Script dashboard and paste its web-app URL (ends in
+      <code>/exec</code>) into <code>assets/js/newsletter-config.js</code>.
+      Full steps are in <strong>ADMIN-SETUP.md</strong>.</p>
+  </div>
+  <script src="../assets/js/newsletter-config.js"></script>
+  <script>
+    (function () {
+      var url = (window.CL_NEWSLETTER || {}).endpoint || "";
+      if (url) { document.getElementById("dash").src = url; }
+      else { document.getElementById("dash").hidden = true; document.getElementById("notset").hidden = false; }
+    })();
+  </script>
+</body>
+</html>

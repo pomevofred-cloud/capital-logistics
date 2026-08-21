@@ -3,44 +3,54 @@
 <head>
 <base target="_top">
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--blue:#002AC2;--yellow:#FFE200;--ink:#1B2432;--body:#6C7280;--line:#E4E6EC;--page:#F4F5F8}
+  :root{--blue:#002AC2;--blue-d:#0021a0;--yellow:#FFE200;--ink:#1B2432;--body:#6C7280;--eyebrow:#8C919B;--line:#E6E8EF;--page:#F5F6FA;--card:#fff}
   *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--page);color:var(--ink)}
-  .wrap{max-width:940px;margin:0 auto;padding:24px 18px 60px}
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
-  .brand .mk{width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800}
+  body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--page);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+  .brand__logo{height:30px;width:auto;display:block}
+  .brand__logo .lg-mark{fill:var(--blue)}.brand__logo .lg-word{fill:var(--ink)}.brand__logo .lg-sarl{fill:#A6ABB6}
+  .brand-row{display:flex;align-items:center;gap:11px}
+  .tag{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:rgba(0,42,194,.08);padding:4px 9px;border-radius:6px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   .muted{color:var(--body);font-size:.85rem}
-  .btn{border:0;border-radius:10px;padding:11px 18px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
-  .btn--primary{background:var(--blue);color:#fff}
-  .btn--ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
-  .btn--danger{background:#fff;border:1px solid #e7c3c0;color:#C0392B;padding:7px 12px;font-size:.8rem;border-radius:8px}
+  .btn{border:0;border-radius:11px;padding:11px 18px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .18s,border-color .18s,transform .18s}
+  .btn:active{transform:scale(.98)}
+  .btn--primary{background:var(--blue);color:#fff}.btn--primary:hover{background:var(--blue-d)}
+  .btn--ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn--ghost:hover{background:#F7F8FB}
+  .btn--danger{background:#fff;border:1px solid #ecc9c6;color:#C0392B;padding:7px 12px;font-size:.8rem;border-radius:9px}.btn--danger:hover{background:#fdf3f2}
   .btn:disabled{opacity:.55;cursor:default}
-  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(16,20,30,.05)}
-  input,select{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:.95rem;font-family:inherit;background:#fff;color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(16,20,40,.05)}
+  input,select{width:100%;height:46px;border:1px solid var(--line);border-radius:11px;padding:0 13px;font-size:.95rem;font-family:inherit;background:#fff;color:var(--ink)}
   input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,42,194,.12)}
-  label{display:block;font-size:.78rem;color:var(--body);margin:0 0 5px;font-weight:600}
+  input::placeholder{color:#A6ABB6}
+  label{display:block;font-size:.76rem;color:var(--body);margin:0 0 6px;font-weight:600}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .grid-3{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px;align-items:end}
-  .tabs{display:flex;gap:8px;margin-bottom:16px}
-  .tab{padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:.86rem;color:var(--body)}
+  .tabs{display:flex;gap:8px;margin-bottom:18px}
+  .tab{padding:9px 17px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:.86rem;color:var(--body);font-family:inherit}
   .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
-  table{width:100%;border-collapse:collapse;font-size:.86rem}
-  th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
-  th{color:var(--body);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
-  .pill{display:inline-block;padding:3px 9px;border-radius:999px;background:#EEF1F7;font-size:.72rem;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:.87rem}
+  th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{color:var(--body);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+  tr:last-child td{border-bottom:0}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(0,42,194,.07);color:var(--blue);font-size:.72rem;font-weight:600}
+  .stage{display:inline-flex;align-items:center;gap:6px}.stage b{color:var(--ink)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px rgba(255,226,0,.25)}
   .row-actions{display:flex;gap:6px;justify-content:flex-end}
-  .msg{font-size:.82rem;margin:10px 2px 0;min-height:16px}
-  .msg.err{color:#C0392B}.msg.ok{color:var(--blue)}
+  .msg{font-size:.82rem;margin:12px 2px 0;min-height:16px}.msg.err{color:#C0392B}.msg.ok{color:var(--blue)}
   .hide{display:none}
-  .login{max-width:380px;margin:8vh auto 0}
-  .login h1{font-size:1.3rem;margin:0 0 4px}
-  .center{display:flex;align-items:center;justify-content:center;gap:8px}
+  .login{max-width:392px;margin:9vh auto 0}
+  .login h1{font-size:1.35rem;margin:14px 0 4px}
+  .center{display:flex;align-items:center}
+  .between{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .scroll{overflow-x:auto}
-  h2{font-size:1.05rem;margin:0 0 14px}
-  .link{background:none;border:0;color:var(--blue);font-weight:600;cursor:pointer;font-size:.82rem;padding:0}
-  @media(max-width:640px){.grid,.grid-3{grid-template-columns:1fr}}
+  h2{font-size:1.06rem;margin:0 0 16px}
+  .link{background:none;border:0;color:var(--blue);font-weight:600;cursor:pointer;font-size:.82rem;padding:0;font-family:inherit}
+  .accent{height:3px;width:34px;background:var(--yellow);border-radius:3px;margin:2px 0 0}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding:18px 14px 50px}}
 </style>
 </head>
 <body>
@@ -48,10 +58,11 @@
 <!-- LOGIN -->
 <div id="loginView" class="wrap">
   <div class="login card">
-    <div class="center" style="justify-content:flex-start;margin-bottom:14px"><span class="mk brand" style="width:34px;height:34px">C</span><strong>Capital Logistics — Admin</strong></div>
+    <div class="center"><svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg></div>
+    <div class="accent"></div>
     <h1>Sign in</h1>
-    <p class="muted" style="margin-top:4px">Enter the admin password to manage the site.</p>
-    <div style="margin-top:16px">
+    <p class="muted" style="margin-top:2px">Enter the admin password to manage the site content.</p>
+    <div style="margin-top:18px">
       <label for="pw">Password</label>
       <input id="pw" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
     </div>
@@ -63,7 +74,7 @@
 <!-- DASHBOARD -->
 <div id="appView" class="wrap hide">
   <div class="topbar">
-    <div class="brand"><span class="mk">C</span> Capital Logistics — Admin</div>
+    <div class="brand-row"><svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg><span class="tag">Admin</span></div>
     <button class="btn btn--ghost" onclick="logout()">Sign out</button>
   </div>
 
@@ -72,7 +83,6 @@
     <button class="tab" id="tabNews" onclick="showTab('news')">Newsletter</button>
   </div>
 
-  <!-- SHIPMENTS -->
   <div id="shipPane">
     <div class="card" style="margin-bottom:16px">
       <h2 id="formTitle">Add a shipment</h2>
@@ -83,46 +93,43 @@
         <div><label>Destination</label><input id="f_dest" placeholder="Kinshasa Warehouse 03"></div>
         <div><label>Stage</label>
           <select id="f_step">
-            <option value="1">1 — Picked up</option>
-            <option value="2" selected>2 — In transit</option>
-            <option value="3">3 — At customs</option>
-            <option value="4">4 — Out for delivery</option>
-            <option value="5">5 — Delivered</option>
+            <option value="1">1 &#8212; Picked up</option>
+            <option value="2" selected>2 &#8212; In transit</option>
+            <option value="3">3 &#8212; At customs</option>
+            <option value="4">4 &#8212; Out for delivery</option>
+            <option value="5">5 &#8212; Delivered</option>
           </select>
         </div>
       </div>
-      <div class="center" style="justify-content:flex-start;margin-top:16px">
+      <div class="center" style="gap:10px;margin-top:18px">
         <button class="btn btn--primary" id="saveBtn" onclick="saveShipment()">Save shipment</button>
-        <button class="btn btn--ghost hide" id="cancelBtn" onclick="resetForm()">Cancel edit</button>
+        <button class="btn btn--ghost hide" id="cancelBtn" onclick="resetForm()">Cancel</button>
       </div>
       <p id="shipMsg" class="msg"></p>
     </div>
 
     <div class="card">
-      <div class="center" style="justify-content:space-between"><h2 style="margin:0">Current shipments</h2><button class="link" onclick="loadShipments()">Refresh</button></div>
-      <div class="scroll" style="margin-top:12px">
+      <div class="between"><h2 style="margin:0">Current shipments</h2><button class="link" onclick="loadShipments()">Refresh</button></div>
+      <div class="scroll" style="margin-top:14px">
         <table><thead><tr><th>Reference</th><th>Status</th><th>Origin</th><th>Destination</th><th>Stage</th><th></th></tr></thead>
-        <tbody id="shipRows"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody></table>
+        <tbody id="shipRows"><tr><td colspan="6" class="muted">Loading&#8230;</td></tr></tbody></table>
       </div>
     </div>
   </div>
 
-  <!-- NEWSLETTER -->
   <div id="newsPane" class="hide">
     <div class="card">
-      <div class="center" style="justify-content:space-between"><h2 style="margin:0">Newsletter sign-ups</h2><button class="link" onclick="loadNewsletter()">Refresh</button></div>
-      <div class="scroll" style="margin-top:12px">
-        <table><thead><tr><th>Email</th><th>Date</th></tr></thead><tbody id="newsRows"><tr><td colspan="2" class="muted">Loading…</td></tr></tbody></table>
+      <div class="between"><h2 style="margin:0">Newsletter sign-ups</h2><button class="link" onclick="loadNewsletter()">Refresh</button></div>
+      <div class="scroll" style="margin-top:14px">
+        <table><thead><tr><th>Email</th><th>Date</th></tr></thead><tbody id="newsRows"><tr><td colspan="2" class="muted">Loading&#8230;</td></tr></tbody></table>
       </div>
     </div>
   </div>
 </div>
-
 <script>
   var PW = "";
   function $(id){ return document.getElementById(id); }
   function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
-
   function login(){
     var pw=$('pw').value; if(!pw) return;
     $('loginBtn').disabled=true; $('loginMsg').textContent='';
@@ -130,25 +137,20 @@
       $('loginBtn').disabled=false;
       if(res && res.ok){ PW=pw; $('loginView').classList.add('hide'); $('appView').classList.remove('hide'); loadShipments(); }
       else { $('loginMsg').textContent='Incorrect password.'; $('loginMsg').className='msg err'; }
-    }).withFailureHandler(function(){ $('loginBtn').disabled=false; $('loginMsg').textContent='Connection error. Try again.'; $('loginMsg').className='msg err'; })
-      .apiLogin(pw);
+    }).withFailureHandler(function(){ $('loginBtn').disabled=false; $('loginMsg').textContent='Connection error. Try again.'; $('loginMsg').className='msg err'; }).apiLogin(pw);
   }
   function logout(){ PW=""; $('appView').classList.add('hide'); $('loginView').classList.remove('hide'); $('pw').value=''; }
-
   function showTab(t){
     $('tabShip').classList.toggle('active', t==='ship'); $('tabNews').classList.toggle('active', t==='news');
     $('shipPane').classList.toggle('hide', t!=='ship'); $('newsPane').classList.toggle('hide', t!=='news');
     if(t==='news') loadNewsletter();
   }
-
-  function loadShipments(){
-    google.script.run.withSuccessHandler(function(res){ if(res&&res.ok) renderShipments(res.rows); }).apiListShipments(PW);
-  }
+  function loadShipments(){ google.script.run.withSuccessHandler(function(res){ if(res&&res.ok) renderShipments(res.rows); }).apiListShipments(PW); }
   function renderShipments(rows){
     var tb=$('shipRows');
     if(!rows||!rows.length){ tb.innerHTML='<tr><td colspan="6" class="muted">No shipments yet.</td></tr>'; return; }
     tb.innerHTML=rows.map(function(r){
-      return '<tr><td><strong>'+esc(r.reference)+'</strong></td><td><span class="pill">'+esc(r.status)+'</span></td><td>'+esc(r.origin)+'</td><td>'+esc(r.destination)+'</td><td>'+esc(r.step)+'/5</td>'+
+      return '<tr><td><strong>'+esc(r.reference)+'</strong></td><td><span class="pill">'+esc(r.status)+'</span></td><td>'+esc(r.origin)+'</td><td>'+esc(r.destination)+'</td><td><span class="stage"><span class="dot"></span><b>'+esc(r.step)+'</b>/5</span></td>'+
         '<td><div class="row-actions"><button class="btn--ghost btn" style="padding:6px 12px;font-size:.8rem" onclick="editShipment(\''+esc(r.reference)+'\')">Edit</button>'+
         '<button class="btn--danger" onclick="deleteShipment(\''+esc(r.reference)+'\')">Delete</button></div></td></tr>';
     }).join('');
@@ -157,29 +159,20 @@
   function editShipment(ref){
     var r=(window.__rows||[]).filter(function(x){return x.reference===ref;})[0]; if(!r) return;
     $('f_ref').value=r.reference; $('f_status').value=r.status; $('f_origin').value=r.origin; $('f_dest').value=r.destination; $('f_step').value=r.step;
-    $('formTitle').textContent='Edit '+r.reference; $('cancelBtn').classList.remove('hide');
-    window.scrollTo(0,0);
+    $('formTitle').textContent='Edit '+r.reference; $('cancelBtn').classList.remove('hide'); window.scrollTo(0,0);
   }
-  function resetForm(){
-    ['f_ref','f_status','f_origin','f_dest'].forEach(function(id){$(id).value='';}); $('f_step').value='2';
-    $('formTitle').textContent='Add a shipment'; $('cancelBtn').classList.add('hide'); $('shipMsg').textContent='';
-  }
+  function resetForm(){ ['f_ref','f_status','f_origin','f_dest'].forEach(function(id){$(id).value='';}); $('f_step').value='2'; $('formTitle').textContent='Add a shipment'; $('cancelBtn').classList.add('hide'); $('shipMsg').textContent=''; }
   function saveShipment(){
     var row={reference:$('f_ref').value.trim(), status:$('f_status').value.trim(), origin:$('f_origin').value.trim(), destination:$('f_dest').value.trim(), step:$('f_step').value};
     if(!row.reference){ $('shipMsg').textContent='Reference is required.'; $('shipMsg').className='msg err'; return; }
-    $('saveBtn').disabled=true; $('shipMsg').textContent='Saving…'; $('shipMsg').className='msg';
+    $('saveBtn').disabled=true; $('shipMsg').textContent='Saving\u2026'; $('shipMsg').className='msg';
     google.script.run.withSuccessHandler(function(res){
       $('saveBtn').disabled=false;
       if(res&&res.ok){ renderShipments(res.rows); resetForm(); $('shipMsg').textContent='Saved.'; $('shipMsg').className='msg ok'; setTimeout(function(){$('shipMsg').textContent='';},1500); }
       else { $('shipMsg').textContent=(res&&res.error)||'Could not save.'; $('shipMsg').className='msg err'; }
-    }).withFailureHandler(function(){ $('saveBtn').disabled=false; $('shipMsg').textContent='Connection error.'; $('shipMsg').className='msg err'; })
-      .apiSaveShipment(PW,row);
+    }).withFailureHandler(function(){ $('saveBtn').disabled=false; $('shipMsg').textContent='Connection error.'; $('shipMsg').className='msg err'; }).apiSaveShipment(PW,row);
   }
-  function deleteShipment(ref){
-    if(!confirm('Delete shipment '+ref+'?')) return;
-    google.script.run.withSuccessHandler(function(res){ if(res&&res.ok) renderShipments(res.rows); }).apiDeleteShipment(PW,ref);
-  }
-
+  function deleteShipment(ref){ if(!confirm('Delete shipment '+ref+'?')) return; google.script.run.withSuccessHandler(function(res){ if(res&&res.ok) renderShipments(res.rows); }).apiDeleteShipment(PW,ref); }
   function loadNewsletter(){
     google.script.run.withSuccessHandler(function(res){
       var tb=$('newsRows');

@@ -68,9 +68,31 @@ Commit those two one‑line changes (or send them to whoever manages the repo).
 
 ---
 
+## Access — same domain as the website
+
+Once Step 5 is done, the dashboard is available **on your own site** at
+**`/admin`** — e.g. `https://…github.io/capital-logistics/admin/` now, and
+`https://clcongo.com/admin/` after you connect the real domain. That page simply
+embeds the Apps Script dashboard, so the address bar stays on your domain.
+(You can also open the raw `/exec` URL directly if you ever need to.)
+
+## Custom domain — smooth transition
+
+The setup is built to move to your real domain with **zero dashboard changes**:
+
+- The website (and its `/admin` page) is served by GitHub Pages. To use a custom
+  domain: repo **Settings ▸ Pages ▸ Custom domain**, enter `clcongo.com`, and add
+  the DNS records GitHub shows (a `CNAME`/`A` records at your registrar). GitHub
+  adds a `CNAME` file and provisions HTTPS automatically.
+- Nothing in the site hard‑codes the `github.io` address — links are relative and
+  the tracking/newsletter/admin endpoints are the Google URLs you pasted in
+  Step 5. So when the domain switches, `clcongo.com/admin` just works.
+- The Apps Script backend is independent of the website's domain, so it never
+  needs to change.
+
 ## Using it day‑to‑day
 
-- Open your `/exec` dashboard URL, sign in with the password.
+- Open **`yourdomain.com/admin`** (or the `/exec` URL) and sign in with the password.
 - **Shipments** tab: add or edit a shipment (reference, status, origin,
   destination, stage 1–5) → **Save**. It appears on the site’s tracker within a
   few minutes (Google refreshes the published CSV).
