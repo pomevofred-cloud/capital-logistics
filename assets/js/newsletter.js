@@ -1,8 +1,8 @@
 /* Capital Logistics — newsletter pop-up.
    Shows once per visitor (after a delay or on exit intent), validates the
-   email client-side, and POSTs it to the configured endpoint (see
-   newsletter-config.js). No secrets in the frontend; the endpoint is a
-   serverless Google Apps Script that appends to a private Sheet. */
+   email client-side, and saves it to the Supabase database (see
+   supabase-config.js). No secrets in the frontend: the public anon key can
+   only INSERT a newsletter row — Row-Level-Security blocks everything else. */
 (function () {
   var modal = document.getElementById("newsletter");
   if (!modal) return;
@@ -62,12 +62,17 @@
       form.querySelector(".nl-btn--primary").disabled = true;
       setTimeout(close, 1700);
     };
-    var url = (window.CL_NEWSLETTER || {}).endpoint || "";
-    if (url) {
-      fetch(url, {
-        method: "POST", mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "action=newsletter&email=" + encodeURIComponent(v)
+    var sb = window.CL_SUPABASE || {};
+    if (sb.url && sb.anonKey) {
+      fetch(sb.url.replace(/\/+$/, "") + "/rest/v1/newsletter", {
+        method: "POST",
+        headers: {
+          apikey: sb.anonKey,
+          Authorization: "Bearer " + sb.anonKey,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+        body: JSON.stringify({ email: v })
       }).then(done, done);
     } else { done(); }
   });

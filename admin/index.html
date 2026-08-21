@@ -3,35 +3,660 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://script.google.com https://*.googleusercontent.com; connect-src 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co; form-action 'self'" />
 <meta name="robots" content="noindex, nofollow" />
-<title>Capital Logistics — Admin</title>
+<title>Capital Logistics — Tracking CMS</title>
 <style>
-  html,body{margin:0;height:100%;background:#F5F6FA;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#1B2432}
-  #dash{border:0;width:100%;height:100vh;height:100dvh;display:block}
-  .setup{max-width:520px;margin:12vh auto;padding:0 22px;text-align:center}
-  .mk{width:48px;height:48px;border-radius:12px;background:#002AC2;color:#fff;display:inline-grid;place-items:center;font-weight:800;font-size:1.3rem;margin-bottom:16px}
-  .setup h1{font-size:1.3rem;margin:0 0 8px}
-  .setup p{color:#6C7280;line-height:1.6;font-size:.95rem}
-  .setup code{background:#EBEDF3;padding:2px 7px;border-radius:6px;font-size:.9em}
+  @font-face{font-family:'GoogleSansFlex';src:url('../assets/fonts/GoogleSansFlex.woff2') format('woff2');font-weight:100 900;font-display:swap}
+  :root{
+    --blue:#002AC2; --blue-700:#0022a0; --blue-050:#EAEDFB; --yellow:#FFE200;
+    --ink:#141A26; --body:#5A6270; --muted:#8890A0;
+    --page:#EEF0F5; --card:#FFFFFF; --line:#E4E7F0; --line-soft:#EEF0F6;
+    --ok:#12A150; --ok-bg:#E4F6EC; --warn:#B45309; --warn-bg:#FBEED6; --info-bg:#E7ECFC;
+    --sh:0 1px 2px rgba(16,20,45,.05),0 12px 30px rgba(16,20,45,.07);
+    --sh-sm:0 1px 2px rgba(16,20,45,.05),0 5px 14px rgba(16,20,45,.05);
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{background:var(--page);color:var(--body);
+    font-family:'GoogleSansFlex',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{color:var(--ink);margin:0;letter-spacing:-.01em}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:15px}
+  [hidden]{display:none !important}
+
+  /* logo mark */
+  .mark{width:40px;height:40px;border-radius:11px;background:var(--blue);flex:none;
+    display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,42,194,.28)}
+  .mark svg{width:25px;height:25px}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;
+    border-radius:11px;padding:10px 16px;font-weight:600;font-size:.92rem;line-height:1;transition:.15s;white-space:nowrap}
+  .btn--primary{background:var(--blue);color:#fff;box-shadow:var(--sh-sm)}
+  .btn--primary:hover{background:var(--blue-700)}
+  .btn--ghost{background:var(--card);color:var(--ink);border-color:var(--line)}
+  .btn--ghost:hover{border-color:var(--blue);color:var(--blue)}
+  .btn--sm{padding:7px 12px;font-size:.85rem;border-radius:9px}
+  .btn--danger{background:var(--card);color:#C22;border-color:var(--line)}
+  .btn--danger:hover{background:#C22;color:#fff;border-color:#C22}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+
+  /* ══ LOGIN ══ */
+  #login{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px}
+  .login-card{width:100%;max-width:400px;background:var(--card);border:1px solid var(--line);
+    border-radius:20px;box-shadow:var(--sh);padding:34px 30px}
+  .login-card .brandrow{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .login-card .bt{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .login-card .bt b{display:block;color:var(--ink);font-size:1.02rem;letter-spacing:-.01em;text-transform:none;margin-top:1px}
+  .login-card h1{font-size:1.32rem;margin-bottom:6px}
+  .login-card p.sub{margin:0 0 20px;font-size:.92rem}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+  .field input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);transition:.15s}
+  .field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050)}
+  #login .btn--primary{width:100%;padding:13px;margin-top:4px}
+  .err{color:#C22;font-size:.85rem;margin:2px 0 12px;min-height:1.1em}
+  .setup-note{background:var(--blue-050);border-radius:12px;padding:14px 16px;font-size:.86rem;color:var(--ink);line-height:1.55;margin-top:6px}
+  .setup-note code{background:#fff;padding:1px 6px;border-radius:5px;font-size:.92em;border:1px solid var(--line)}
+
+  /* ══ APP SHELL ══ */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(10px);
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:11px clamp(14px,3vw,26px)}
+  .topbar .bt{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .topbar .bt b{display:block;color:var(--ink);font-size:.98rem;letter-spacing:-.01em;text-transform:none}
+  .topbar .spacer{flex:1}
+  .who{font-size:.82rem;color:var(--body);max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tabs{display:flex;gap:4px;padding:12px clamp(14px,3vw,26px) 0;max-width:1120px;margin:0 auto;width:100%}
+  .tab{background:none;border:0;padding:10px 16px;border-radius:10px 10px 0 0;font-weight:600;font-size:.92rem;color:var(--muted)}
+  .tab.is-active{color:var(--blue);background:var(--card);box-shadow:0 -1px 0 var(--line) inset,-1px 0 0 var(--line) inset,1px 0 0 var(--line) inset}
+  main{max-width:1120px;margin:0 auto;padding:clamp(16px,3vw,26px)}
+
+  /* toolbar */
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px}
+  .search{position:relative;flex:1;min-width:220px}
+  .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+  .search input{width:100%;padding:11px 14px 11px 40px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink)}
+  .search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050)}
+  .switch{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;color:var(--body);user-select:none}
+  .switch input{width:16px;height:16px;accent-color:var(--blue)}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh-sm)}
+  .stat .k{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-size:1.5rem;font-weight:800;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+  .stat .v.blue{color:var(--blue)} .stat .v.ok{color:var(--ok)} .stat .v.warn{color:var(--warn)}
+
+  /* table */
+  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+  .tscroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th{text-align:left;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+    padding:13px 16px;border-bottom:1px solid var(--line);background:var(--line-soft);white-space:nowrap}
+  td{padding:13px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--line-soft)}
+  .ref{font-weight:700;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .route{color:var(--body);font-size:.9rem}
+  .arch-row{opacity:.55}
+  .arch-tag{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-left:8px;vertical-align:middle}
+
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;letter-spacing:.02em;
+    padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .pill--info{background:var(--info-bg);color:var(--blue)}
+  .pill--ok{background:var(--ok-bg);color:var(--ok)}
+  .pill--warn{background:var(--warn-bg);color:var(--warn)}
+  .pill--muted{background:#EEF0F5;color:var(--muted)}
+
+  .stage{display:flex;align-items:center;gap:5px}
+  .stage .seg{width:20px;height:5px;border-radius:3px;background:var(--line)}
+  .stage .seg.on{background:var(--blue)}
+  .stage .lab{font-size:.72rem;color:var(--muted);margin-left:6px;white-space:nowrap}
+  .when{font-size:.82rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .row-actions{display:flex;gap:6px;justify-content:flex-end}
+  .iconbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;width:34px;height:34px;
+    display:grid;place-items:center;color:var(--body);transition:.15s}
+  .iconbtn:hover{border-color:var(--blue);color:var(--blue)}
+  .iconbtn.danger:hover{border-color:#C22;color:#C22}
+  .iconbtn svg{width:16px;height:16px}
+
+  .empty{padding:54px 20px;text-align:center;color:var(--muted)}
+  .empty svg{width:40px;height:40px;opacity:.5;margin-bottom:10px}
+  .empty b{display:block;color:var(--ink);font-size:1rem;margin-bottom:4px}
+
+  /* editor slide-over */
+  .scrim{position:fixed;inset:0;background:rgba(16,20,40,.42);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+  .scrim.open{opacity:1;pointer-events:auto}
+  .editor{position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(440px,100vw);background:var(--card);
+    box-shadow:-14px 0 40px rgba(16,20,40,.14);z-index:41;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.28,1);
+    display:flex;flex-direction:column}
+  .editor.open{transform:none}
+  .editor__head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+  .editor__head h2{font-size:1.12rem;flex:1}
+  .editor__body{padding:20px 22px;overflow-y:auto;flex:1}
+  .editor__foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px}
+  .editor__foot .btn--primary{flex:1}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .fld{margin-bottom:15px}
+  .fld label{display:block;font-size:.76rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+  .fld input,.fld select,.fld textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);transition:.15s}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050)}
+  .fld textarea{resize:vertical;min-height:70px}
+  .fld .hint{font-size:.74rem;color:var(--muted);margin-top:5px}
+  .ferr{color:#C22;font-size:.82rem;margin-top:8px;min-height:1em}
+  .archline{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--body);padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--line-soft)}
+  .archline input{width:17px;height:17px;accent-color:var(--blue)}
+
+  /* toast */
+  #toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);z-index:60;background:var(--ink);color:#fff;
+    padding:12px 20px;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 12px 30px rgba(0,0,0,.25);
+    opacity:0;pointer-events:none;transition:.28s;display:flex;align-items:center;gap:9px;max-width:90vw}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+  #toast.ok{background:#0F7A3D} #toast.bad{background:#B02020}
+  #toast svg{width:17px;height:17px;flex:none}
+
+  @media (max-width:640px){
+    .stats{grid-template-columns:1fr 1fr}
+    .who{display:none}
+  }
 </style>
 </head>
 <body>
-  <iframe id="dash" title="Capital Logistics admin dashboard" referrerpolicy="no-referrer"></iframe>
-  <div id="notset" class="setup" hidden>
-    <div class="mk">C</div>
-    <h1>Admin not connected yet</h1>
-    <p>Deploy the Apps Script dashboard and paste its web-app URL (ends in
-      <code>/exec</code>) into <code>assets/js/newsletter-config.js</code>.
-      Full steps are in <strong>ADMIN-SETUP.md</strong>.</p>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="login">
+  <div class="login-card">
+    <div class="brandrow">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="38 36 38 38" fill="none"><g transform="matrix(0.02079,0,0,0.02079,-145.062279,3.940184)"><g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)"><g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)"><path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" fill="#fff"/></g><g transform="matrix(1,0,0,1,0,0.044308)"><path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" fill="#fff"/></g></g></g></svg>
+      </span>
+      <span class="bt">Capital Logistics<b>Tracking CMS</b></span>
+    </div>
+
+    <div id="loginForm">
+      <h1>Sign in</h1>
+      <p class="sub">Manage live shipment tracking for the website.</p>
+      <form id="frmLogin" autocomplete="on">
+        <div class="field">
+          <label for="lgEmail">Email</label>
+          <input type="email" id="lgEmail" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="lgPass">Password</label>
+          <input type="password" id="lgPass" autocomplete="current-password" required />
+        </div>
+        <p class="err" id="lgErr" role="alert"></p>
+        <button type="submit" class="btn btn--primary" id="lgBtn">Sign in</button>
+      </form>
+    </div>
+
+    <div id="notset" hidden>
+      <h1>Almost ready</h1>
+      <p class="sub">The dashboard is installed — it just needs its database connection.</p>
+      <div class="setup-note">
+        Add your Supabase <code>url</code> and <code>anonKey</code> to
+        <code>assets/js/supabase-config.js</code>, then reload this page.
+        Full steps are in <b>admin/SETUP.md</b>.
+      </div>
+    </div>
   </div>
-  <script src="../assets/js/newsletter-config.js"></script>
-  <script>
-    (function () {
-      var url = (window.CL_NEWSLETTER || {}).endpoint || "";
-      if (url) { document.getElementById("dash").src = url; }
-      else { document.getElementById("dash").hidden = true; document.getElementById("notset").hidden = false; }
-    })();
-  </script>
+</div>
+
+<!-- ═══════════ APP ═══════════ -->
+<div id="app" hidden>
+  <div class="topbar">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="38 36 38 38" fill="none"><g transform="matrix(0.02079,0,0,0.02079,-145.062279,3.940184)"><g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)"><g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)"><path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" fill="#fff"/></g><g transform="matrix(1,0,0,1,0,0.044308)"><path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" fill="#fff"/></g></g></g></svg>
+    </span>
+    <span class="bt">Capital Logistics<b>Tracking CMS</b></span>
+    <span class="spacer"></span>
+    <span class="who" id="who"></span>
+    <button class="btn btn--ghost btn--sm" id="btnLogout">Sign out</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab is-active" data-tab="ship">Shipments</button>
+    <button class="tab" data-tab="news">Newsletter</button>
+  </div>
+
+  <main>
+    <!-- SHIPMENTS -->
+    <section id="pane-ship">
+      <div class="stats">
+        <div class="stat"><div class="k">Total</div><div class="v" id="stTotal">0</div></div>
+        <div class="stat"><div class="k">In transit</div><div class="v blue" id="stTransit">0</div></div>
+        <div class="stat"><div class="k">Delivered</div><div class="v ok" id="stDone">0</div></div>
+        <div class="stat"><div class="k">Needs attention</div><div class="v warn" id="stWarn">0</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+          <input type="search" id="q" placeholder="Search reference, origin, destination…" aria-label="Search shipments" />
+        </div>
+        <label class="switch"><input type="checkbox" id="showArch" /> Show archived</label>
+        <button class="btn btn--ghost btn--sm" id="btnReload" title="Reload">↻ Refresh</button>
+        <button class="btn btn--primary" id="btnNew">+ New shipment</button>
+      </div>
+
+      <div class="tablewrap">
+        <div class="tscroll">
+          <table>
+            <thead><tr>
+              <th>Reference</th><th>Route</th><th>Status</th><th>Stage</th><th>Updated</th><th style="text-align:right">Actions</th>
+            </tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="shipEmpty" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          <b>No shipments yet</b>
+          <span>Click “New shipment” to add your first tracking record.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="pane-news" hidden>
+      <div class="toolbar">
+        <div class="stat" style="min-width:150px"><div class="k">Subscribers</div><div class="v" id="nlCount">0</div></div>
+        <span class="spacer" style="flex:1"></span>
+        <button class="btn btn--ghost btn--sm" id="nlReload">↻ Refresh</button>
+        <button class="btn btn--ghost btn--sm" id="nlCopy">Copy all emails</button>
+      </div>
+      <div class="tablewrap">
+        <div class="tscroll">
+          <table>
+            <thead><tr><th>Email</th><th style="text-align:right">Subscribed</th></tr></thead>
+            <tbody id="nlRows"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="nlEmpty" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m2.5 6.5 9.5 6 9.5-6"/></svg>
+          <b>No subscribers yet</b>
+          <span>Newsletter sign-ups from the website appear here.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- editor -->
+<div class="scrim" id="scrim"></div>
+<aside class="editor" id="editor" aria-label="Shipment editor">
+  <div class="editor__head">
+    <h2 id="edTitle">New shipment</h2>
+    <button class="iconbtn" id="edClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></svg></button>
+  </div>
+  <div class="editor__body">
+    <form id="frmEdit" autocomplete="off">
+      <div class="fld">
+        <label for="fRef">Tracking number *</label>
+        <input type="text" id="fRef" placeholder="CL-2024-000000" required />
+        <div class="hint">Uppercase, e.g. CL-2024-001240. Must be unique.</div>
+      </div>
+      <div class="grid2">
+        <div class="fld">
+          <label for="fStatus">Status</label>
+          <input type="text" id="fStatus" list="statusList" placeholder="IN TRANSIT" />
+          <datalist id="statusList">
+            <option value="PICKED UP"></option><option value="IN TRANSIT"></option>
+            <option value="AT CUSTOMS"></option><option value="OUT FOR DELIVERY"></option>
+            <option value="DELIVERED"></option><option value="DELAYED"></option>
+            <option value="ON HOLD"></option><option value="EXCEPTION"></option>
+          </datalist>
+        </div>
+        <div class="fld">
+          <label for="fStep">Stage (progress)</label>
+          <select id="fStep">
+            <option value="1">1 — Picked up</option>
+            <option value="2" selected>2 — In transit</option>
+            <option value="3">3 — At customs</option>
+            <option value="4">4 — Out for delivery</option>
+            <option value="5">5 — Delivered</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="fld"><label for="fOrigin">Origin</label><input type="text" id="fOrigin" placeholder="Matadi Port Terminal" /></div>
+        <div class="fld"><label for="fDest">Destination</label><input type="text" id="fDest" placeholder="Kinshasa Warehouse 03" /></div>
+      </div>
+      <div class="grid2">
+        <div class="fld"><label for="fLoc">Current location</label><input type="text" id="fLoc" placeholder="N1 corridor" /></div>
+        <div class="fld"><label for="fEta">Est. delivery</label><input type="date" id="fEta" /></div>
+      </div>
+      <div class="fld"><label for="fNote">Note (internal / detail)</label><textarea id="fNote" placeholder="Optional extra detail…"></textarea></div>
+      <div class="fld" id="archWrap" hidden>
+        <label class="archline"><input type="checkbox" id="fArch" /> Archived (hidden from the public tracking page)</label>
+      </div>
+      <p class="ferr" id="edErr" role="alert"></p>
+    </form>
+  </div>
+  <div class="editor__foot">
+    <button class="btn btn--danger" id="edDelete" hidden>Delete</button>
+    <button class="btn btn--primary" id="edSave">Save &amp; publish</button>
+  </div>
+</aside>
+
+<div id="toast"></div>
+
+<script src="../assets/js/supabase-config.js"></script>
+<script>
+(function () {
+  "use strict";
+  var CFG = window.CL_SUPABASE || {};
+  var BASE = (CFG.url || "").replace(/\/+$/, "");
+  var KEY = CFG.anonKey || "";
+  var SESSION_KEY = "cl_admin_session";
+  var STAGES = ["", "Picked up", "In transit", "At customs", "Out for delivery", "Delivered"];
+  var $ = function (id) { return document.getElementById(id); };
+  var session = null, shipments = [];
+
+  /* ---------- config gate ---------- */
+  if (!BASE || !KEY) {
+    $("loginForm").hidden = true; $("notset").hidden = false;
+    return;
+  }
+
+  /* ---------- helpers ---------- */
+  function clean(s) { return (s == null ? "" : String(s)).replace(/[\u0000-\u001f<>]/g, "").trim(); }
+  function toast(msg, kind) {
+    var t = $("toast");
+    t.className = ""; void t.offsetWidth;
+    t.textContent = msg;
+    t.className = "show" + (kind ? " " + kind : "");
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.className = ""; }, 2600);
+  }
+  function fmtDate(iso) {
+    if (!iso) return "—";
+    var d = new Date(iso); if (isNaN(d)) return "—";
+    return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+  }
+  function pill(status) {
+    var s = (status || "").toUpperCase();
+    if (/DELIVER(ED)?$/.test(s) && s.indexOf("OUT FOR") < 0) return "pill--ok";
+    if (/CUSTOM|DELAY|HOLD|EXCEPT|FAIL|RETURN/.test(s)) return "pill--warn";
+    if (/TRANSIT|OUT FOR|PICKED|DISPATCH|SHIP/.test(s)) return "pill--info";
+    return "pill--muted";
+  }
+
+  /* ---------- session ---------- */
+  function saveSession(d, email) {
+    session = { access: d.access_token, refresh: d.refresh_token,
+      exp: Date.now() + (d.expires_in || 3600) * 1000, email: email || (d.user && d.user.email) || "" };
+    try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) {}
+  }
+  function loadSession() {
+    try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch (e) { session = null; }
+    return session;
+  }
+  function clearSession() { session = null; try { localStorage.removeItem(SESSION_KEY); } catch (e) {} }
+
+  function authHeaders() { return { apikey: KEY, Authorization: "Bearer " + session.access }; }
+
+  function login(email, password) {
+    return fetch(BASE + "/auth/v1/token?grant_type=password", {
+      method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    }).then(function (r) {
+      return r.json().then(function (d) {
+        if (!r.ok) throw new Error(d.error_description || d.msg || d.error || "Sign-in failed");
+        return d;
+      });
+    }).then(function (d) { saveSession(d, email); });
+  }
+  function refresh() {
+    if (!session || !session.refresh) return Promise.reject();
+    return fetch(BASE + "/auth/v1/token?grant_type=refresh_token", {
+      method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: session.refresh })
+    }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (d) { saveSession(d, session.email); });
+  }
+
+  /* ---------- REST (auto-refresh on 401) ---------- */
+  function api(method, path, body, _retry) {
+    var opt = { method: method, headers: authHeaders() };
+    if (body !== undefined) {
+      opt.headers["Content-Type"] = "application/json";
+      opt.headers["Prefer"] = method === "POST" ? "return=representation" : "return=representation";
+      opt.body = JSON.stringify(body);
+    }
+    return fetch(BASE + "/rest/v1/" + path, opt).then(function (r) {
+      if (r.status === 401 && !_retry) {
+        return refresh().then(function () { return api(method, path, body, true); },
+          function () { doLogout(); throw new Error("Session expired — please sign in again."); });
+      }
+      if (!r.ok) return r.text().then(function (t) { throw new Error(parseErr(t)); });
+      if (r.status === 204) return null;
+      return r.text().then(function (t) { return t ? JSON.parse(t) : null; });
+    });
+  }
+  function parseErr(t) {
+    try { var j = JSON.parse(t); if (j.code === "23505") return "That tracking number already exists."; return j.message || j.hint || t; }
+    catch (e) { return t || "Request failed"; }
+  }
+
+  /* ---------- views ---------- */
+  function showApp() {
+    $("login").hidden = true; $("app").hidden = false;
+    $("who").textContent = session.email || "";
+    loadShipments();
+  }
+  function doLogout() {
+    clearSession(); shipments = [];
+    $("app").hidden = true; $("login").hidden = false;
+    $("loginForm").hidden = false; $("lgPass").value = ""; $("lgErr").textContent = "";
+  }
+
+  /* ---------- shipments ---------- */
+  function loadShipments() {
+    api("GET", "shipments?select=*&order=updated_at.desc").then(function (rows) {
+      shipments = rows || []; renderStats(); renderRows();
+    }).catch(function (e) { toast(e.message || "Could not load shipments", "bad"); });
+  }
+  function renderStats() {
+    var total = 0, transit = 0, done = 0, warn = 0;
+    shipments.forEach(function (s) {
+      if (s.archived) return;
+      total++;
+      var st = (s.status || "").toUpperCase();
+      if (/DELIVER(ED)?$/.test(st) && st.indexOf("OUT FOR") < 0) done++;
+      else if (/CUSTOM|DELAY|HOLD|EXCEPT|FAIL|RETURN/.test(st)) warn++;
+      else transit++;
+    });
+    $("stTotal").textContent = total; $("stTransit").textContent = transit;
+    $("stDone").textContent = done; $("stWarn").textContent = warn;
+  }
+  function renderRows() {
+    var q = clean($("q").value).toLowerCase();
+    var showArch = $("showArch").checked;
+    var tb = $("rows"); tb.textContent = "";
+    var list = shipments.filter(function (s) {
+      if (s.archived && !showArch) return false;
+      if (!q) return true;
+      return (s.reference + " " + s.origin + " " + s.destination + " " + s.status).toLowerCase().indexOf(q) >= 0;
+    });
+    $("shipEmpty").hidden = list.length > 0;
+    list.forEach(function (s) {
+      var tr = document.createElement("tr");
+      if (s.archived) tr.className = "arch-row";
+
+      var tdRef = document.createElement("td");
+      var rf = document.createElement("span"); rf.className = "ref"; rf.textContent = s.reference; tdRef.appendChild(rf);
+      if (s.archived) { var at = document.createElement("span"); at.className = "arch-tag"; at.textContent = "archived"; tdRef.appendChild(at); }
+
+      var tdRoute = document.createElement("td"); tdRoute.className = "route";
+      tdRoute.textContent = (s.origin || "—") + "  →  " + (s.destination || "—");
+
+      var tdStatus = document.createElement("td");
+      var p = document.createElement("span"); p.className = "pill " + pill(s.status);
+      var dot = document.createElement("span"); dot.className = "d"; p.appendChild(dot);
+      p.appendChild(document.createTextNode(s.status || "—")); tdStatus.appendChild(p);
+
+      var tdStage = document.createElement("td");
+      var stg = document.createElement("div"); stg.className = "stage";
+      for (var i = 1; i <= 5; i++) { var seg = document.createElement("span"); seg.className = "seg" + (i <= s.step ? " on" : ""); stg.appendChild(seg); }
+      var lab = document.createElement("span"); lab.className = "lab"; lab.textContent = STAGES[s.step] || ""; stg.appendChild(lab);
+      tdStage.appendChild(stg);
+
+      var tdWhen = document.createElement("td");
+      var w = document.createElement("span"); w.className = "when"; w.textContent = fmtDate(s.updated_at); tdWhen.appendChild(w);
+
+      var tdAct = document.createElement("td");
+      var act = document.createElement("div"); act.className = "row-actions";
+      act.appendChild(iconBtn("edit", "Edit", function () { openEditor(s); }));
+      act.appendChild(iconBtn(s.archived ? "unarch" : "arch", s.archived ? "Restore" : "Archive", function () { toggleArchive(s); }));
+      act.appendChild(iconBtn("del", "Delete", function () { del(s); }, true));
+      tdAct.appendChild(act);
+
+      tr.appendChild(tdRef); tr.appendChild(tdRoute); tr.appendChild(tdStatus);
+      tr.appendChild(tdStage); tr.appendChild(tdWhen); tr.appendChild(tdAct);
+      tb.appendChild(tr);
+    });
+  }
+  var ICONS = {
+    edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+    arch: '<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>',
+    unarch: '<path d="M21 8v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8"/><path d="M1 4h22v4H1z"/><path d="M12 17V9m0 0-3 3m3-3 3 3"/>',
+    del: '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6"/><path d="M10 11v6M14 11v6"/>'
+  };
+  function iconBtn(kind, label, fn, danger) {
+    var b = document.createElement("button");
+    b.className = "iconbtn" + (danger ? " danger" : ""); b.title = label; b.setAttribute("aria-label", label);
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICONS[kind] + "</svg>";
+    b.addEventListener("click", fn); return b;
+  }
+
+  /* ---------- editor ---------- */
+  var editing = null;
+  function openEditor(s) {
+    editing = s || null;
+    $("edTitle").textContent = s ? "Edit shipment" : "New shipment";
+    $("edErr").textContent = "";
+    $("fRef").value = s ? s.reference : "";
+    $("fStatus").value = s ? s.status : "IN TRANSIT";
+    $("fStep").value = s ? String(s.step || 2) : "2";
+    $("fOrigin").value = s ? (s.origin || "") : "";
+    $("fDest").value = s ? (s.destination || "") : "";
+    $("fLoc").value = s ? (s.location || "") : "";
+    $("fEta").value = s && s.eta ? s.eta : "";
+    $("fNote").value = s ? (s.note || "") : "";
+    $("archWrap").hidden = !s; $("fArch").checked = s ? !!s.archived : false;
+    $("edDelete").hidden = !s;
+    $("scrim").classList.add("open"); $("editor").classList.add("open");
+    setTimeout(function () { $("fRef").focus(); }, 260);
+  }
+  function closeEditor() {
+    $("scrim").classList.remove("open"); $("editor").classList.remove("open"); editing = null;
+  }
+  function save() {
+    var ref = clean($("fRef").value).toUpperCase();
+    if (!ref) { $("edErr").textContent = "A tracking number is required."; $("fRef").focus(); return; }
+    var payload = {
+      reference: ref,
+      status: clean($("fStatus").value) || "IN TRANSIT",
+      step: Math.max(1, Math.min(5, parseInt($("fStep").value, 10) || 2)),
+      origin: clean($("fOrigin").value),
+      destination: clean($("fDest").value),
+      location: clean($("fLoc").value),
+      eta: $("fEta").value || null,
+      note: clean($("fNote").value),
+      archived: editing ? $("fArch").checked : false
+    };
+    $("edSave").disabled = true; $("edErr").textContent = "";
+    var req = editing
+      ? api("PATCH", "shipments?id=eq." + encodeURIComponent(editing.id), payload)
+      : api("POST", "shipments", payload);
+    req.then(function () {
+      $("edSave").disabled = false; closeEditor();
+      toast(editing ? "Saved — live on the site" : "Published — live on the site", "ok");
+      loadShipments();
+    }).catch(function (e) {
+      $("edSave").disabled = false; $("edErr").textContent = e.message || "Could not save.";
+    });
+  }
+  function toggleArchive(s) {
+    api("PATCH", "shipments?id=eq." + encodeURIComponent(s.id), { archived: !s.archived })
+      .then(function () { toast(s.archived ? "Restored" : "Archived", "ok"); loadShipments(); })
+      .catch(function (e) { toast(e.message || "Failed", "bad"); });
+  }
+  function del(s) {
+    if (!window.confirm("Delete " + s.reference + " permanently? This cannot be undone.\n\nTip: use Archive to hide it instead.")) return;
+    api("DELETE", "shipments?id=eq." + encodeURIComponent(s.id))
+      .then(function () { toast("Deleted", "ok"); loadShipments(); })
+      .catch(function (e) { toast(e.message || "Failed", "bad"); });
+  }
+
+  /* ---------- newsletter ---------- */
+  var nlData = [];
+  function loadNewsletter() {
+    api("GET", "newsletter?select=*&order=created_at.desc").then(function (rows) {
+      nlData = rows || [];
+      $("nlCount").textContent = nlData.length;
+      var tb = $("nlRows"); tb.textContent = "";
+      $("nlEmpty").hidden = nlData.length > 0;
+      nlData.forEach(function (n) {
+        var tr = document.createElement("tr");
+        var e = document.createElement("td"); e.textContent = n.email; e.style.fontWeight = "600"; e.style.color = "var(--ink)";
+        var d = document.createElement("td"); d.style.textAlign = "right";
+        var w = document.createElement("span"); w.className = "when"; w.textContent = fmtDate(n.created_at); d.appendChild(w);
+        tr.appendChild(e); tr.appendChild(d); tb.appendChild(tr);
+      });
+    }).catch(function (e) { toast(e.message || "Could not load", "bad"); });
+  }
+
+  /* ---------- wiring ---------- */
+  $("frmLogin").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = clean($("lgEmail").value), pw = $("lgPass").value;
+    $("lgErr").textContent = ""; $("lgBtn").disabled = true; $("lgBtn").textContent = "Signing in…";
+    login(email, pw).then(showApp).catch(function (err) {
+      $("lgErr").textContent = err.message || "Sign-in failed.";
+    }).then(function () { $("lgBtn").disabled = false; $("lgBtn").textContent = "Sign in"; });
+  });
+  $("btnLogout").addEventListener("click", doLogout);
+  $("btnNew").addEventListener("click", function () { openEditor(null); });
+  $("btnReload").addEventListener("click", loadShipments);
+  $("q").addEventListener("input", renderRows);
+  $("showArch").addEventListener("change", renderRows);
+  $("edClose").addEventListener("click", closeEditor);
+  $("scrim").addEventListener("click", closeEditor);
+  $("edSave").addEventListener("click", save);
+  $("edDelete").addEventListener("click", function () { if (editing) del(editing); });
+  $("frmEdit").addEventListener("submit", function (e) { e.preventDefault(); save(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeEditor(); });
+
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (x) { x.classList.remove("is-active"); });
+      t.classList.add("is-active");
+      var tab = t.getAttribute("data-tab");
+      $("pane-ship").hidden = tab !== "ship";
+      $("pane-news").hidden = tab !== "news";
+      if (tab === "news") loadNewsletter();
+    });
+  });
+  $("nlReload").addEventListener("click", loadNewsletter);
+  $("nlCopy").addEventListener("click", function () {
+    var txt = nlData.map(function (n) { return n.email; }).join("\n");
+    navigator.clipboard.writeText(txt).then(function () { toast("Copied " + nlData.length + " emails", "ok"); },
+      function () { toast("Copy failed", "bad"); });
+  });
+
+  /* ---------- boot ---------- */
+  loadSession();
+  if (session && session.access) {
+    if (session.exp && session.exp < Date.now() + 30000) {
+      refresh().then(showApp).catch(doLogout);
+    } else { showApp(); }
+  }
+})();
+</script>
 </body>
 </html>

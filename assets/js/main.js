@@ -99,13 +99,10 @@
     [].forEach.call(document.querySelectorAll(".faq.is-open"), function (f) { var a = f.querySelector(".faq__a"); if (a) a.style.height = a.firstElementChild.scrollHeight + "px"; });
   });
 
-  /* ---------- Tracker (data from tracking.js → Google Sheet or demo) ---------- */
+  /* ---------- Tracker (live data from tracking.js → Supabase or demo) ---------- */
   var form = document.getElementById("trackForm");
   if (form) {
-    function show(ref) {
-      ref = (ref || "").trim().toUpperCase(); if (!ref) ref = "CL-2024-001234";
-      var r = (window.CL_getShipment && window.CL_getShipment(ref)) ||
-              (window.CL_defaultShipment ? window.CL_defaultShipment() : { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03" });
+    function render(ref, r) {
       var shipWord = (function () { try { return localStorage.getItem("cl_lang") === "fr" ? "Envoi " : "Shipment "; } catch (e) { return "Shipment "; } })();
       document.getElementById("trackRefLabel").textContent = ref;
       document.getElementById("trackId").textContent = shipWord + ref;
@@ -117,6 +114,13 @@
         res.style.transition = "none"; res.style.opacity = ".45"; res.style.transform = "translateY(6px)";
         requestAnimationFrame(function () { res.style.transition = "opacity .4s ease, transform .4s ease"; res.style.opacity = "1"; res.style.transform = "none"; });
       }
+    }
+    function show(ref) {
+      ref = (ref || "").trim().toUpperCase(); if (!ref) ref = "CL-2024-001234";
+      Promise.resolve(window.CL_getShipment ? window.CL_getShipment(ref) : null).then(function (r) {
+        if (!r) r = window.CL_defaultShipment ? window.CL_defaultShipment() : { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03" };
+        render(ref, r);
+      });
     }
     form.addEventListener("submit", function (e) { e.preventDefault(); show(document.getElementById("trackInput").value); });
     document.querySelectorAll(".tracker__try button").forEach(function (b) {
