@@ -77,21 +77,26 @@
     counters.forEach(function (el) { cio.observe(el); });
   }
 
-  /* ---------- FAQ accordion ---------- */
-  var faqs = [].slice.call(document.querySelectorAll(".faq"));
+  /* ---------- FAQ accordion (event-delegated so items can be swapped by the CMS) ---------- */
   function setFaq(f, open) {
     var b = f.querySelector(".faq__q"), a = f.querySelector(".faq__a");
     f.classList.toggle("is-open", open);
     if (b) b.setAttribute("aria-expanded", open ? "true" : "false");
     if (a) a.style.height = open ? a.firstElementChild.scrollHeight + "px" : "0px";
   }
-  faqs.forEach(function (f) {
-    setFaq(f, f.classList.contains("is-open"));
-    var b = f.querySelector(".faq__q");
-    if (b) b.addEventListener("click", function () { setFaq(f, !f.classList.contains("is-open")); });
+  function initFaqHeights() {
+    [].forEach.call(document.querySelectorAll(".faq"), function (f) { setFaq(f, f.classList.contains("is-open")); });
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest(".faq__q");
+    if (!b) return;
+    var f = b.closest(".faq");
+    if (f) setFaq(f, !f.classList.contains("is-open"));
   });
+  initFaqHeights();
+  window.CL_initFaqHeights = initFaqHeights;
   window.addEventListener("resize", function () {
-    faqs.forEach(function (f) { if (f.classList.contains("is-open")) { var a = f.querySelector(".faq__a"); if (a) a.style.height = a.firstElementChild.scrollHeight + "px"; } });
+    [].forEach.call(document.querySelectorAll(".faq.is-open"), function (f) { var a = f.querySelector(".faq__a"); if (a) a.style.height = a.firstElementChild.scrollHeight + "px"; });
   });
 
   /* ---------- Tracker (data from tracking.js → Google Sheet or demo) ---------- */

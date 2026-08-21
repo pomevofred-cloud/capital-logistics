@@ -67,7 +67,7 @@
       fetch(url, {
         method: "POST", mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "email=" + encodeURIComponent(v)
+        body: "action=newsletter&email=" + encodeURIComponent(v)
       }).then(done, done);
     } else { done(); }
   });
