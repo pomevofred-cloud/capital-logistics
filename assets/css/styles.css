@@ -430,7 +430,7 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
   .nav__links,.nav__actions{display:none}
   .nav__toggle{display:inline-flex}
   .site-header .nav{height:66px}
-  .site-header .brand__logo{height:44px}
+  .site-header .brand__logo{height:46px}
   /* hero: keep image card, let content breathe; stack head + aside */
   .hero{min-height:clamp(460px,58vw,560px)}
   .hero__inner{grid-template-columns:1fr;gap:20px;align-items:end;padding:40px}
@@ -763,7 +763,8 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 .site-header--over:not(.is-solid) .lg-mark{fill:#fff}
 .site-header--over:not(.is-solid) .lg-word{fill:#fff;filter:drop-shadow(0 1px 10px rgba(0,0,0,.25))}
 .site-header--over:not(.is-solid) .lg-sarl{fill:rgba(255,255,255,.72)}
-@media (max-width:640px){.site-header .brand__logo{height:46px}}
+@media (max-width:640px){.site-header .brand__logo{height:50px}}
+@media (max-width:640px){body .mobile-menu__top .brand__logo{height:50px}}
 
 /* =========================================================================
    TESTIMONIAL SLIDER — swipeable (scroll-snap), arrows on desktop
@@ -827,15 +828,16 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
 /* =========================================================================
    MOBILE MENU — full-screen blue overlay (matches "Menu Opening" design)
    ========================================================================= */
-.mobile-menu{position:fixed;inset:0;z-index:320;background:var(--blue);color:#fff;display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateY(-10px);transition:opacity .38s var(--ease),transform .42s var(--ease)}
+.mobile-menu{position:fixed;inset:0;z-index:320;background:var(--blue);color:#fff;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .34s var(--ease)}
 body.nav-open{overflow:hidden}
-body.nav-open .mobile-menu{opacity:1;pointer-events:auto;transform:none}
-.mobile-menu__top{position:relative;height:86px;flex:none}
-.mobile-menu__top .brand{position:absolute;left:clamp(20px,6vw,40px);top:50%;transform:translateY(-50%)}
-.mobile-menu__top .brand__logo{height:42px;width:auto}
+body.nav-open .cookie{opacity:0!important;visibility:hidden!important;pointer-events:none}
+body.nav-open .mobile-menu{opacity:1;pointer-events:auto}
+.mobile-menu__top{position:relative;height:66px;flex:none}
+.mobile-menu__top .brand{position:absolute;left:var(--edge);top:50%;transform:translateY(-50%)}
+.mobile-menu__top .brand__logo{height:46px;width:auto}
 .mobile-menu .lg-mark,.mobile-menu .lg-word{fill:#fff}
 .mobile-menu .lg-sarl{fill:rgba(255,255,255,.72)}
-.mobile-menu__close{position:absolute;right:clamp(16px,5vw,34px);top:50%;transform:translateY(-50%);width:46px;height:46px;color:#fff;display:grid;place-items:center;border-radius:50%;transition:background var(--t)}
+.mobile-menu__close{position:absolute;right:calc(var(--edge) - 8px);top:50%;transform:translateY(-50%);width:46px;height:46px;color:#fff;display:grid;place-items:center;border-radius:50%;transition:background var(--t)}
 .mobile-menu__close:hover{background:rgba(255,255,255,.12)}
 .mobile-menu__list{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.6vh,16px);padding:0 clamp(40px,13vw,66px) 9vh}
 .mobile-menu__list a{display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(300px,76vw);color:#fff;font-size:clamp(1.65rem,7.2vw,2.1rem);font-weight:400;letter-spacing:-.02em;line-height:1;padding:9px 0;opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
