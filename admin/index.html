@@ -10,7 +10,7 @@
   @font-face{font-family:'GoogleSansFlex';src:url('../assets/fonts/GoogleSansFlex.woff2') format('woff2');font-weight:100 900;font-display:swap}
   :root{
     --blue:#002AC2; --blue-700:#0022a0; --blue-050:#EAEDFB; --yellow:#FFE200;
-    --ink:#141A26; --body:#5A6270; --muted:#8890A0;
+    --ink:#141A26; --body:#5A6270; --muted:#8890A0; --eyebrow:#8C919B;
     --page:#EEF0F5; --card:#FFFFFF; --line:#E4E7F0; --line-soft:#EEF0F6;
     --ok:#12A150; --ok-bg:#E4F6EC; --warn:#B45309; --warn-bg:#FBEED6; --info-bg:#E7ECFC;
     --sh:0 1px 2px rgba(16,20,45,.05),0 12px 30px rgba(16,20,45,.07);
@@ -21,16 +21,19 @@
   html,body{margin:0;min-height:100%}
   body{background:var(--page);color:var(--body);
     font-family:'GoogleSansFlex',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   h1,h2,h3{color:var(--ink);margin:0;letter-spacing:-.01em}
   button{font-family:inherit;cursor:pointer}
   input,select,textarea{font-family:inherit;font-size:15px}
   [hidden]{display:none !important}
 
-  /* logo mark */
-  .mark{width:40px;height:40px;border-radius:11px;background:var(--blue);flex:none;
-    display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,42,194,.28)}
-  .mark svg{width:25px;height:25px}
+  /* ══ real website logo ══ */
+  .brand__logo{height:38px;width:auto;display:block;flex:none}
+  .brand__logo .lg-mark{fill:var(--blue)}
+  .brand__logo .lg-word{fill:var(--ink)}
+  .brand__logo .lg-sarl{fill:var(--eyebrow)}
+  .cms-tag{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--blue);background:var(--blue-050);padding:5px 9px;border-radius:7px;white-space:nowrap}
 
   /* buttons */
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;
@@ -39,55 +42,56 @@
   .btn--primary:hover{background:var(--blue-700)}
   .btn--ghost{background:var(--card);color:var(--ink);border-color:var(--line)}
   .btn--ghost:hover{border-color:var(--blue);color:var(--blue)}
-  .btn--sm{padding:7px 12px;font-size:.85rem;border-radius:9px}
+  .btn--sm{padding:8px 13px;font-size:.85rem;border-radius:9px}
   .btn--danger{background:var(--card);color:#C22;border-color:var(--line)}
   .btn--danger:hover{background:#C22;color:#fff;border-color:#C22}
   .btn:disabled{opacity:.55;cursor:not-allowed}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
   /* ══ LOGIN ══ */
   #login{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px}
   .login-card{width:100%;max-width:400px;background:var(--card);border:1px solid var(--line);
-    border-radius:20px;box-shadow:var(--sh);padding:34px 30px}
-  .login-card .brandrow{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-  .login-card .bt{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .login-card .bt b{display:block;color:var(--ink);font-size:1.02rem;letter-spacing:-.01em;text-transform:none;margin-top:1px}
-  .login-card h1{font-size:1.32rem;margin-bottom:6px}
-  .login-card p.sub{margin:0 0 20px;font-size:.92rem}
-  .field{margin-bottom:14px}
+    border-radius:20px;box-shadow:var(--sh);padding:38px 32px}
+  .login-brand{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:26px}
+  .login-brand .brand__logo{height:46px}
+  .login-card h1{font-size:1.4rem;margin-bottom:6px;text-align:center}
+  .login-card p.sub{margin:0 0 22px;font-size:.92rem;text-align:center}
+  .field{margin-bottom:15px}
   .field label{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:6px}
   .field input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);transition:.15s}
   .field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050)}
-  #login .btn--primary{width:100%;padding:13px;margin-top:4px}
+  #login .btn--primary{width:100%;padding:13px;margin-top:6px;font-size:1rem}
   .err{color:#C22;font-size:.85rem;margin:2px 0 12px;min-height:1.1em}
-  .setup-note{background:var(--blue-050);border-radius:12px;padding:14px 16px;font-size:.86rem;color:var(--ink);line-height:1.55;margin-top:6px}
+  .setup-note{background:var(--blue-050);border-radius:12px;padding:14px 16px;font-size:.86rem;color:var(--ink);line-height:1.55;margin-top:6px;text-align:left}
   .setup-note code{background:#fff;padding:1px 6px;border-radius:5px;font-size:.92em;border:1px solid var(--line)}
 
   /* ══ APP SHELL ══ */
-  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(10px);
-    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:11px clamp(14px,3vw,26px)}
-  .topbar .bt{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.2}
-  .topbar .bt b{display:block;color:var(--ink);font-size:.98rem;letter-spacing:-.01em;text-transform:none}
-  .topbar .spacer{flex:1}
-  .who{font-size:.82rem;color:var(--body);max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .tabs{display:flex;gap:4px;padding:12px clamp(14px,3vw,26px) 0;max-width:1120px;margin:0 auto;width:100%}
-  .tab{background:none;border:0;padding:10px 16px;border-radius:10px 10px 0 0;font-weight:600;font-size:.92rem;color:var(--muted)}
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(10px);
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:12px clamp(14px,3vw,26px)}
+  .tb-brand{display:inline-flex;align-items:center}
+  .tb-divider{width:1px;height:26px;background:var(--line)}
+  .spacer{flex:1}
+  .who{font-size:.82rem;color:var(--body);max-width:32vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tabs{display:flex;gap:4px;padding:14px clamp(14px,3vw,26px) 0;max-width:1120px;margin:0 auto;width:100%}
+  .tab{background:none;border:0;padding:10px 18px;border-radius:11px 11px 0 0;font-weight:600;font-size:.94rem;color:var(--muted);transition:.15s}
+  .tab:hover{color:var(--ink)}
   .tab.is-active{color:var(--blue);background:var(--card);box-shadow:0 -1px 0 var(--line) inset,-1px 0 0 var(--line) inset,1px 0 0 var(--line) inset}
   main{max-width:1120px;margin:0 auto;padding:clamp(16px,3vw,26px)}
 
   /* toolbar */
   .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px}
-  .search{position:relative;flex:1;min-width:220px}
+  .search{position:relative;flex:1 1 260px}
   .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
   .search input{width:100%;padding:11px 14px 11px 40px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink)}
   .search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050)}
-  .switch{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;color:var(--body);user-select:none}
+  .switch{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;color:var(--body);user-select:none;white-space:nowrap}
   .switch input{width:16px;height:16px;accent-color:var(--blue)}
 
   /* stat strip */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh-sm)}
-  .stat .k{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .stat .v{font-size:1.5rem;font-weight:800;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;box-shadow:var(--sh-sm)}
+  .stat .k{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-size:1.6rem;font-weight:800;color:var(--ink);margin-top:4px;font-variant-numeric:tabular-nums;line-height:1}
   .stat .v.blue{color:var(--blue)} .stat .v.ok{color:var(--ok)} .stat .v.warn{color:var(--warn)}
 
   /* table */
@@ -119,7 +123,7 @@
   .stage .lab{font-size:.72rem;color:var(--muted);margin-left:6px;white-space:nowrap}
   .when{font-size:.82rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
   .row-actions{display:flex;gap:6px;justify-content:flex-end}
-  .iconbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;width:34px;height:34px;
+  .iconbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;width:36px;height:36px;
     display:grid;place-items:center;color:var(--body);transition:.15s}
   .iconbtn:hover{border-color:var(--blue);color:var(--blue)}
   .iconbtn.danger:hover{border-color:#C22;color:#C22}
@@ -137,7 +141,7 @@
     display:flex;flex-direction:column}
   .editor.open{transform:none}
   .editor__head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
-  .editor__head h2{font-size:1.12rem;flex:1}
+  .editor__head h2{font-size:1.14rem;flex:1}
   .editor__body{padding:20px 22px;overflow-y:auto;flex:1}
   .editor__foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px}
   .editor__foot .btn--primary{flex:1}
@@ -160,22 +164,61 @@
   #toast.ok{background:#0F7A3D} #toast.bad{background:#B02020}
   #toast svg{width:17px;height:17px;flex:none}
 
-  @media (max-width:640px){
+  /* ══════════ RESPONSIVE ══════════ */
+  /* tablet + mobile: table becomes cards, forms go single-column */
+  @media (max-width:860px){
     .stats{grid-template-columns:1fr 1fr}
-    .who{display:none}
+    .tablewrap{background:transparent;border:0;box-shadow:none;overflow:visible;border-radius:0}
+    .tscroll{overflow:visible}
+    table{min-width:0}
+    thead{display:none}
+    table,tbody,tr,td{display:block;width:auto}
+    #rows tr,#nlRows tr{background:var(--card);border:1px solid var(--line);border-radius:14px;
+      box-shadow:var(--sh-sm);margin-bottom:12px;padding:16px 18px}
+    #rows tr:hover,#nlRows tr:hover{background:var(--card)}
+    #rows td,#nlRows td{border:0;padding:7px 0;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    #rows td::before,#nlRows td::before{content:attr(data-label);font-size:.66rem;font-weight:700;
+      letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex:none}
+    #rows td[data-label="Reference"]{padding-top:0}
+    #rows td[data-label="Reference"]::before{display:none}
+    #rows td[data-label="Reference"] .ref{font-size:1.08rem}
+    #rows td[data-label="Route"]{flex-direction:column;align-items:flex-start;gap:3px}
+    #rows td[data-label="Route"] .route{font-size:.95rem}
+    #rows td[data-label="Stage"] .stage{flex-wrap:wrap;justify-content:flex-end}
+    #rows td[data-label="Actions"]{padding-top:11px;margin-top:5px;border-top:1px solid var(--line-soft)}
+    #rows td[data-label="Actions"]::before{display:none}
+    #rows td[data-label="Actions"] .row-actions{width:100%;gap:8px}
+    #rows td[data-label="Actions"] .iconbtn{flex:1;height:40px}
+    #nlRows td[data-label="Subscribed"]{justify-content:space-between}
+    .grid2{grid-template-columns:1fr}
   }
-</style>
+  /* phones only */
+  @media (max-width:767px){
+    .topbar{gap:10px;padding:11px 16px}
+    .tb-divider,.cms-tag,.who{display:none}
+    .brand__logo{height:34px}
+    .tabs{padding:12px 12px 0}
+    main{padding:14px 12px 30px}
+    .search{flex-basis:100%;order:-1}
+    .toolbar .switch{flex:1 1 auto}
+    .toolbar .btn--primary{flex:1 1 auto}
+    .editor{width:100vw}
+    .editor__head,.editor__body,.editor__foot{padding-left:18px;padding-right:18px}
+  }
+  @media (max-width:380px){
+    .stats{gap:10px}
+    .stat .v{font-size:1.4rem}
+  }
+  </style>
 </head>
 <body>
 
 <!-- ═══════════ LOGIN ═══════════ -->
 <div id="login">
   <div class="login-card">
-    <div class="brandrow">
-      <span class="mark" aria-hidden="true">
-        <svg viewBox="38 36 38 38" fill="none"><g transform="matrix(0.02079,0,0,0.02079,-145.062279,3.940184)"><g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)"><g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)"><path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" fill="#fff"/></g><g transform="matrix(1,0,0,1,0,0.044308)"><path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" fill="#fff"/></g></g></g></svg>
-      </span>
-      <span class="bt">Capital Logistics<b>Tracking CMS</b></span>
+    <div class="login-brand">
+      <svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg>
+      <span class="cms-tag">Tracking CMS</span>
     </div>
 
     <div id="loginForm">
@@ -210,10 +253,9 @@
 <!-- ═══════════ APP ═══════════ -->
 <div id="app" hidden>
   <div class="topbar">
-    <span class="mark" aria-hidden="true">
-      <svg viewBox="38 36 38 38" fill="none"><g transform="matrix(0.02079,0,0,0.02079,-145.062279,3.940184)"><g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)"><g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)"><path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" fill="#fff"/></g><g transform="matrix(1,0,0,1,0,0.044308)"><path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" fill="#fff"/></g></g></g></svg>
-    </span>
-    <span class="bt">Capital Logistics<b>Tracking CMS</b></span>
+    <a class="tb-brand" href="../index.html" title="Capital Logistics home"><svg class="brand__logo" viewBox="0 0 66 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  <g transform="matrix(1,0,0,1,-6114.131875,-3633)">    <g transform="matrix(1,0,0,0.986114,6095.64759,3613)">      <g transform="matrix(0.024456,0,0,0.024801,-186.209765,-9.543509)">        <g transform="matrix(0.850083,0,0,0.850083,1416.048937,-125.317067)">          <g transform="matrix(2.093674,0,0,2.093674,-9027.394361,-9855.245606)">            <g transform="matrix(0.833817,0.552041,-0.552041,0.833817,4585.059437,-3712.574177)">              <path d="M9106.704,5204.393L9001.166,5417.731L8598.744,5441.952L8704,5230L9106.704,5204.393Z" class="lg-mark"/>            </g>            <g transform="matrix(1,0,0,1,0,0.044308)">              <path d="M8956,6260.001L8609,6059L8609,5655L8673,5617.5L8876,5736L8813.108,5773.79L8813.108,6100.304L8815.974,6103.507L8815.108,6104.006L8956,6260.001ZM8956,6260.001L8815.108,6104.006L9098.387,5940.608L9305.344,6056.574L8956,6260.001Z" class="lg-mark"/>            </g>          </g>          <g transform="matrix(6.181697,0,0,6.181697,10454.958333,1856.605037)">            <path d="M1,8C1,11.84 4.16,15 8,15C11.84,15 15,11.84 15,8C15,4.16 11.84,1 8,1C4.16,1 1,4.16 1,8M16,8C16,12.389 12.389,16 8,16C3.611,16 0,12.389 0,8C-0,3.611 3.611,0 8,0C12.389,-0 16,3.611 16,8M5.5,4.002L8.61,4.002C10.32,4.002 11.351,4.975 11.351,6.462C11.351,7.6 10.684,8.402 9.856,8.702L11.5,12L9.98,12L8.52,8.924L6.836,8.924L6.836,12L5.5,12L5.5,4.002ZM6.835,5.092L6.835,7.869L8.384,7.869C9.379,7.869 9.957,7.406 9.957,6.509C9.957,5.596 9.361,5.092 8.42,5.092L6.835,5.092Z" class="lg-mark" style="fill-rule:nonzero"/>          </g>        </g>        <g transform="matrix(1.118549,0,0,1.118549,-1354.84269,-1123.877382)">          <text x="8688px" y="3692px" style="font-family:'GoogleSansFlex72pt-ExtraBold', 'Google Sans Flex 72pt', sans-serif;font-weight:800;font-size:252.684px;" class="lg-word">C<tspan x="8857.551px 9031.272px 9187.431px 9260.077px 9387.178px 9560.898px " y="3692px 3692px 3692px 3692px 3692px 3692px ">APITAL</tspan></text>          <g transform="matrix(252.68439,0,0,252.68439,11079.531408,3692)">          </g>          <text x="9740.051px" y="3692px" style="font-family:'BwGradualDEMO-ExtraBold', 'Bw Gradual DEMO';font-weight:800;font-size:252.684px;" class="lg-word"><tspan x="9740.051px 9872.711px 10065.509px 10255.022px 10330.07px 10494.314px 10645.167px 10720.214px 10903.916px " y="3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px 3692px ">LOGISTICS</tspan></text>        </g>        <g transform="matrix(0.5,0,0,0.5,4725.650804,1253.773732)">          <g transform="matrix(216.603382,0,0,216.603382,10609.895405,3956)">          </g>          <text x="9386.303px" y="3956px" style="font-family:'BwGradualDEMO-Regular', 'Bw Gradual DEMO';font-size:216.603px;" class="lg-sarl"><tspan x="9386.303px 9752.146px 10124.271px 10492.713px " y="3956px 3956px 3956px 3956px ">SARL</tspan></text>        </g>      </g>    </g>  </g></svg></a>
+    <span class="tb-divider"></span>
+    <span class="cms-tag">Tracking CMS</span>
     <span class="spacer"></span>
     <span class="who" id="who"></span>
     <button class="btn btn--ghost btn--sm" id="btnLogout">Sign out</button>
@@ -265,7 +307,7 @@
     <section id="pane-news" hidden>
       <div class="toolbar">
         <div class="stat" style="min-width:150px"><div class="k">Subscribers</div><div class="v" id="nlCount">0</div></div>
-        <span class="spacer" style="flex:1"></span>
+        <span class="spacer"></span>
         <button class="btn btn--ghost btn--sm" id="nlReload">↻ Refresh</button>
         <button class="btn btn--ghost btn--sm" id="nlCopy">Copy all emails</button>
       </div>
@@ -357,7 +399,6 @@
   var $ = function (id) { return document.getElementById(id); };
   var session = null, shipments = [];
 
-  /* ---------- config gate ---------- */
   if (!BASE || !KEY) {
     $("loginForm").hidden = true; $("notset").hidden = false;
     return;
@@ -396,7 +437,6 @@
     return session;
   }
   function clearSession() { session = null; try { localStorage.removeItem(SESSION_KEY); } catch (e) {} }
-
   function authHeaders() { return { apikey: KEY, Authorization: "Bearer " + session.access }; }
 
   function login(email, password) {
@@ -424,7 +464,7 @@
     var opt = { method: method, headers: authHeaders() };
     if (body !== undefined) {
       opt.headers["Content-Type"] = "application/json";
-      opt.headers["Prefer"] = method === "POST" ? "return=representation" : "return=representation";
+      opt.headers["Prefer"] = "return=representation";
       opt.body = JSON.stringify(body);
     }
     return fetch(BASE + "/rest/v1/" + path, opt).then(function (r) {
@@ -473,6 +513,7 @@
     $("stTotal").textContent = total; $("stTransit").textContent = transit;
     $("stDone").textContent = done; $("stWarn").textContent = warn;
   }
+  function cell(label) { var td = document.createElement("td"); if (label) td.setAttribute("data-label", label); return td; }
   function renderRows() {
     var q = clean($("q").value).toLowerCase();
     var showArch = $("showArch").checked;
@@ -487,28 +528,29 @@
       var tr = document.createElement("tr");
       if (s.archived) tr.className = "arch-row";
 
-      var tdRef = document.createElement("td");
+      var tdRef = cell("Reference");
       var rf = document.createElement("span"); rf.className = "ref"; rf.textContent = s.reference; tdRef.appendChild(rf);
       if (s.archived) { var at = document.createElement("span"); at.className = "arch-tag"; at.textContent = "archived"; tdRef.appendChild(at); }
 
-      var tdRoute = document.createElement("td"); tdRoute.className = "route";
-      tdRoute.textContent = (s.origin || "—") + "  →  " + (s.destination || "—");
+      var tdRoute = cell("Route");
+      var rt = document.createElement("span"); rt.className = "route";
+      rt.textContent = (s.origin || "—") + "  →  " + (s.destination || "—"); tdRoute.appendChild(rt);
 
-      var tdStatus = document.createElement("td");
+      var tdStatus = cell("Status");
       var p = document.createElement("span"); p.className = "pill " + pill(s.status);
       var dot = document.createElement("span"); dot.className = "d"; p.appendChild(dot);
       p.appendChild(document.createTextNode(s.status || "—")); tdStatus.appendChild(p);
 
-      var tdStage = document.createElement("td");
+      var tdStage = cell("Stage");
       var stg = document.createElement("div"); stg.className = "stage";
       for (var i = 1; i <= 5; i++) { var seg = document.createElement("span"); seg.className = "seg" + (i <= s.step ? " on" : ""); stg.appendChild(seg); }
       var lab = document.createElement("span"); lab.className = "lab"; lab.textContent = STAGES[s.step] || ""; stg.appendChild(lab);
       tdStage.appendChild(stg);
 
-      var tdWhen = document.createElement("td");
+      var tdWhen = cell("Updated");
       var w = document.createElement("span"); w.className = "when"; w.textContent = fmtDate(s.updated_at); tdWhen.appendChild(w);
 
-      var tdAct = document.createElement("td");
+      var tdAct = cell("Actions");
       var act = document.createElement("div"); act.className = "row-actions";
       act.appendChild(iconBtn("edit", "Edit", function () { openEditor(s); }));
       act.appendChild(iconBtn(s.archived ? "unarch" : "arch", s.archived ? "Restore" : "Archive", function () { toggleArchive(s); }));
@@ -603,8 +645,8 @@
       $("nlEmpty").hidden = nlData.length > 0;
       nlData.forEach(function (n) {
         var tr = document.createElement("tr");
-        var e = document.createElement("td"); e.textContent = n.email; e.style.fontWeight = "600"; e.style.color = "var(--ink)";
-        var d = document.createElement("td"); d.style.textAlign = "right";
+        var e = cell("Email"); e.textContent = n.email; e.style.fontWeight = "600"; e.style.color = "var(--ink)";
+        var d = cell("Subscribed"); d.style.justifyContent = "flex-end";
         var w = document.createElement("span"); w.className = "when"; w.textContent = fmtDate(n.created_at); d.appendChild(w);
         tr.appendChild(e); tr.appendChild(d); tb.appendChild(tr);
       });
