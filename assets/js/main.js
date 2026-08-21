@@ -26,8 +26,16 @@
   if (scrim) scrim.addEventListener("click", function () { setNav(false); });
   var navClose = document.getElementById("navClose");
   if (navClose) navClose.addEventListener("click", function () { setNav(false); });
-  if (panel) panel.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { setNav(false); }); });
+  if (panel) panel.querySelectorAll("a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      // hide the blue overlay instantly so it can't linger while the next page loads
+      if (panel) panel.classList.add("is-navigating");
+      setNav(false);
+    });
+  });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
+  // reset the menu if the page is restored from the back/forward cache
+  window.addEventListener("pageshow", function () { if (panel) panel.classList.remove("is-navigating"); setNav(false); });
 
   /* ---------- Scroll reveal ---------- */
   var revealEls = [].slice.call(document.querySelectorAll(".reveal,[data-stagger]"));
