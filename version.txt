@@ -1,6 +1,6 @@
 Capital Logistics — deployment marker
-build: 2026-08-21.1
-generated: 2026-08-21T21:35:08Z
+build: 2026-08-21.2
+generated: 2026-08-21T21:41:08Z
 
 If you open  YOURDOMAIN/version.txt  and it shows this exact build number,
 then GitHub -> Hostinger sync is working and the latest changes are live.
