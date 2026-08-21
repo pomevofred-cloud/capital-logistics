@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="cl-build" content="2026-08-21.3" />
+<meta name="cl-build" content="2026-08-21.4" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co; form-action 'self'" />
 <meta name="robots" content="noindex, nofollow" />
 <title>Capital Logistics — Tracking CMS</title>
@@ -26,6 +26,11 @@
   h1,h2,h3{color:var(--ink);margin:0;letter-spacing:-.01em}
   button{font-family:inherit;cursor:pointer}
   input,select,textarea{font-family:inherit;font-size:15px}
+  /* Touch devices: inputs must be >=16px or iOS Safari auto-zooms on focus.
+     Scoped to coarse pointers so the desktop design stays exactly 15px. */
+  @media (pointer:coarse){
+    input,select,textarea{font-size:16px}
+  }
   [hidden]{display:none !important}
 
   /* ══ real website logo ══ */
