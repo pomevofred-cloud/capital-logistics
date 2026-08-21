@@ -686,11 +686,12 @@ body.nav-open .nav-scrim{opacity:1;visibility:visible}
    CONTACT PAGE
    ========================================================================= */
 .contact{display:grid;grid-template-columns:.8fr 1fr;gap:clamp(28px,3.4vw,56px);margin-top:36px;align-items:start}
-.cinfo__item{display:flex;gap:14px;padding:20px 0;border-bottom:1px solid var(--line)}
-.cinfo__item:first-child{padding-top:0}
-.cinfo__ic{width:38px;height:38px;border-radius:10px;background:var(--blue-050);color:var(--blue);display:grid;place-items:center;flex:none}
-.cinfo__item .v{font-size:.9375rem;color:var(--ink)}
-.cinfo__item .s{font-size:.78125rem;color:var(--body);margin-top:6px}
+.contact__info{display:flex;flex-direction:column;gap:12px}
+.cinfo__item{display:flex;gap:14px;align-items:center;padding:17px 19px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--sh-card);text-decoration:none;transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease),transform var(--t) var(--ease)}
+a.cinfo__item:hover{border-color:var(--blue);box-shadow:var(--sh-hover);transform:translateY(-1px)}
+.cinfo__ic{width:42px;height:42px;border-radius:12px;background:var(--blue-050);color:var(--blue);display:grid;place-items:center;flex:none}
+.cinfo__item .v{font-size:.95rem;font-weight:600;color:var(--ink);word-break:break-word}
+.cinfo__item .s{font-size:.8125rem;color:var(--body);margin-top:3px}
 .cform{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:clamp(24px,2.4vw,34px);box-shadow:var(--sh-card)}
 .cform h3{font-size:var(--fs-h2-mid);color:var(--ink)}
 .cform>.lede{margin-top:10px}
