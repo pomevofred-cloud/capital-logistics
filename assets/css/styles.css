@@ -943,3 +943,5 @@ a.footer__credit:hover{color:#fff}
 .nl-btn--primary:hover .arrow{transform:translateX(3px)}
 @media (max-width:640px){.nl-card{padding:30px 22px 24px;border-radius:20px}.nl-actions{flex-direction:column-reverse}.nl-card__title{font-size:1.28rem}}
 @media (prefers-reduced-motion:reduce){.nl-modal,.nl-card{transition:opacity .2s}.nl-card{transform:none}}
+
+body.nl-lock{overflow:hidden}

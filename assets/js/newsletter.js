@@ -22,12 +22,14 @@
   function open() {
     if (modal.classList.contains("is-open")) return;
     modal.hidden = false;
+    document.body.classList.add("nl-lock");
     requestAnimationFrame(function () { modal.classList.add("is-open"); });
     var f = modal.querySelector("#nlEmail");
     if (f) setTimeout(function () { f.focus(); }, 380);
   }
   function close() {
     modal.classList.remove("is-open");
+    document.body.classList.remove("nl-lock");
     setTimeout(function () { modal.hidden = true; }, 340);
   }
 
