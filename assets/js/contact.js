@@ -11,7 +11,10 @@
     p.className = "note";
     p.style.color = "var(--blue)";
     p.style.fontWeight = "500";
-    p.textContent = "✓ Thanks, your message is ready. We'll respond within one business day.";
+    var fr = (function () { try { return localStorage.getItem("cl_lang") === "fr"; } catch (e) { return false; } })();
+    p.textContent = fr
+      ? "✓ Merci — votre message est prêt. Nous répondrons sous un jour ouvrable."
+      : "✓ Thanks, your message is ready. We'll respond within one business day.";
     foot.appendChild(p);
   });
 })();

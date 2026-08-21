@@ -101,8 +101,9 @@
       ref = (ref || "").trim().toUpperCase(); if (!ref) ref = "CL-2024-001234";
       var r = (window.CL_getShipment && window.CL_getShipment(ref)) ||
               (window.CL_defaultShipment ? window.CL_defaultShipment() : { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03" });
+      var shipWord = (function () { try { return localStorage.getItem("cl_lang") === "fr" ? "Envoi " : "Shipment "; } catch (e) { return "Shipment "; } })();
       document.getElementById("trackRefLabel").textContent = ref;
-      document.getElementById("trackId").textContent = "Shipment " + ref;
+      document.getElementById("trackId").textContent = shipWord + ref;
       document.getElementById("trackStatus").textContent = r.status;
       form.parentNode.querySelector(".tracker__node--from .n-name").textContent = r.origin;
       form.parentNode.querySelector(".tracker__node--to .n-name").textContent = r.destination;
