@@ -19,6 +19,9 @@
   var scrim = document.getElementById("navScrim");
   var panel = document.getElementById("mobilePanel");
   function setNav(open) {
+    // opening always starts from a clean state so a stale "navigating" flag
+    // can never keep the blue overlay hidden — or flash it — on reopen
+    if (open && panel) panel.classList.remove("is-navigating");
     document.body.classList.toggle("nav-open", open);
     if (toggle) { toggle.setAttribute("aria-expanded", open ? "true" : "false"); toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu"); }
   }
