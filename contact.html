@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; form-action 'self'" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>Contact · Capital Logistics</title>
 <meta name="description" content="Quote requests, project enquiries, partner discussions, a single message opens the door. We respond within one business day." />
@@ -160,17 +160,7 @@
   </div>
   </footer>
 
-<script>
-(function(){
-  var f=document.getElementById('contactForm');
-  if(!f) return;
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var foot=f.querySelector('.cform__foot');
-    foot.innerHTML='<p class="note" style="color:var(--blue);font-weight:500">✓ Thanks, your message is ready. We\'ll respond within one business day.</p>';
-  });
-})();
-</script>
+<script src="assets/js/contact.js" defer></script>
 <!-- Cookie consent -->
 <div class="cookie" id="cookieBanner" role="dialog" aria-label="Cookie consent">
   <span class="cookie__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
