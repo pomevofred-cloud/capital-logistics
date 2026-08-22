@@ -113,19 +113,23 @@
   /* ---------- Tracker (live data from tracking.js → Supabase or demo) ---------- */
   var form = document.getElementById("trackForm");
   if (form) {
+    var lastRef = null, lastRec = null; // remembered so we can re-render on language change
     function render(ref, r) {
+      lastRef = ref; lastRec = r;
+      var loc = window.CL_localizeShipment ? window.CL_localizeShipment(r) : r;
       var shipWord = (function () { try { return localStorage.getItem("cl_lang") === "fr" ? "Envoi " : "Shipment "; } catch (e) { return "Shipment "; } })();
       document.getElementById("trackRefLabel").textContent = ref;
       document.getElementById("trackId").textContent = shipWord + ref;
-      document.getElementById("trackStatus").textContent = r.status;
-      form.parentNode.querySelector(".tracker__node--from .n-name").textContent = r.origin;
-      form.parentNode.querySelector(".tracker__node--to .n-name").textContent = r.destination;
+      document.getElementById("trackStatus").textContent = loc.status;
+      form.parentNode.querySelector(".tracker__node--from .n-name").textContent = loc.origin;
+      form.parentNode.querySelector(".tracker__node--to .n-name").textContent = loc.destination;
       var res = document.getElementById("trackResult");
       if (!reduce && res) {
         res.style.transition = "none"; res.style.opacity = ".45"; res.style.transform = "translateY(6px)";
         requestAnimationFrame(function () { res.style.transition = "opacity .4s ease, transform .4s ease"; res.style.opacity = "1"; res.style.transform = "none"; });
       }
     }
+    window.addEventListener("cl:langchange", function () { if (lastRef != null && lastRec) render(lastRef, lastRec); });
     function show(ref) {
       ref = (ref || "").trim().toUpperCase(); if (!ref) ref = "CL-2024-001234";
       Promise.resolve(window.CL_getShipment ? window.CL_getShipment(ref) : null).then(function (r) {

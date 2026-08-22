@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="cl-build" content="2026-08-21.6" />
+<meta name="cl-build" content="2026-08-21.7" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co; form-action 'self'" />
 <meta name="robots" content="noindex, nofollow" />
 <title>Capital Logistics — Tracking CMS</title>
@@ -159,6 +159,12 @@
   .fld textarea{resize:vertical;min-height:70px}
   .fld .hint{font-size:.74rem;color:var(--muted);margin-top:5px}
   .ferr{color:#C22;font-size:.82rem;margin-top:8px;min-height:1em}
+  .lang-tabs{display:flex;gap:5px;margin-bottom:16px;background:var(--line-soft);padding:4px;border-radius:11px}
+  .lang-tab{flex:1;background:none;border:0;padding:8px 10px;border-radius:8px;font-weight:600;font-size:.86rem;color:var(--muted);cursor:pointer;transition:.15s}
+  .lang-tab.is-active{background:var(--card);color:var(--blue);box-shadow:var(--sh-sm)}
+  .lang-note{font-size:.8rem;color:var(--body);background:var(--blue-050);border-radius:9px;padding:9px 12px;margin:0 0 16px;line-height:1.5}
+  .lang-note b{color:var(--ink)}
+  .fld input:disabled,.fld select:disabled{background:var(--line-soft);color:var(--muted);cursor:not-allowed;opacity:.75}
   .archline{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--body);padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--line-soft)}
   .archline input{width:17px;height:17px;accent-color:var(--blue)}
 
@@ -343,6 +349,11 @@
   </div>
   <div class="editor__body">
     <form id="frmEdit" autocomplete="off">
+      <div class="lang-tabs" id="edLangTabs" role="tablist">
+        <button type="button" class="lang-tab is-active" data-l="en">English</button>
+        <button type="button" class="lang-tab" data-l="fr">Français</button>
+      </div>
+      <p class="lang-note" id="edLangNote" hidden>Editing the <b>French</b> version — leave a field blank to fall back to English. Tracking number, stage, and date are shared across languages.</p>
       <div class="fld">
         <label for="fRef">Tracking number *</label>
         <input type="text" id="fRef" placeholder="CL-2024-000000" required />
@@ -393,7 +404,7 @@
 
 <div id="toast"></div>
 
-<script src="../assets/js/supabase-config.js?v=2026-08-21.6"></script>
+<script src="../assets/js/supabase-config.js?v=2026-08-21.7"></script>
 <script>
 (function () {
   "use strict";
@@ -583,20 +594,54 @@
 
   /* ---------- editor ---------- */
   var editing = null;
+  /* translatable text fields (per language); the rest are shared across languages */
+  var TR_FIELDS = ["status", "origin", "destination", "location", "note"];
+  var TR_INPUT = { status: "fStatus", origin: "fOrigin", destination: "fDest", location: "fLoc", note: "fNote" };
+  var SHARED_IDS = ["fRef", "fStep", "fEta", "fArch"];
+  var edData = null, edLang = "en", basePH = {};
+  function getPH(id) { if (basePH[id] === undefined) basePH[id] = $(id).getAttribute("placeholder") || ""; return basePH[id]; }
+  function loadLangFields(l) {
+    TR_FIELDS.forEach(function (f) {
+      var el = $(TR_INPUT[f]);
+      el.value = l === "en" ? (edData[f] || "") : ((edData.translations[l] && edData.translations[l][f]) || "");
+      el.placeholder = (l !== "en" && edData[f]) ? edData[f] : getPH(TR_INPUT[f]);
+    });
+  }
+  function saveLangFields(l) {
+    TR_FIELDS.forEach(function (f) {
+      var v = clean($(TR_INPUT[f]).value);
+      if (l === "en") { edData[f] = v; }
+      else { edData.translations[l] = edData.translations[l] || {}; if (v) edData.translations[l][f] = v; else delete edData.translations[l][f]; }
+    });
+  }
+  function switchEditorLang(l) {
+    if (l === edLang) return;
+    saveLangFields(edLang); edLang = l; loadLangFields(l);
+    SHARED_IDS.forEach(function (id) { var e = $(id); if (e) e.disabled = (l !== "en"); });
+    document.querySelectorAll(".lang-tab").forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-l") === l); });
+    $("edLangNote").hidden = (l === "en");
+  }
   function openEditor(s) {
-    editing = s || null;
+    editing = s || null; edLang = "en";
     $("edTitle").textContent = s ? "Edit shipment" : "New shipment";
     $("edErr").textContent = "";
+    edData = {
+      status: s ? s.status : "IN TRANSIT",
+      origin: s ? (s.origin || "") : "",
+      destination: s ? (s.destination || "") : "",
+      location: s ? (s.location || "") : "",
+      note: s ? (s.note || "") : "",
+      translations: (s && s.translations && typeof s.translations === "object") ? JSON.parse(JSON.stringify(s.translations)) : {}
+    };
     $("fRef").value = s ? s.reference : "";
-    $("fStatus").value = s ? s.status : "IN TRANSIT";
     $("fStep").value = s ? String(s.step || 2) : "2";
-    $("fOrigin").value = s ? (s.origin || "") : "";
-    $("fDest").value = s ? (s.destination || "") : "";
-    $("fLoc").value = s ? (s.location || "") : "";
     $("fEta").value = s && s.eta ? s.eta : "";
-    $("fNote").value = s ? (s.note || "") : "";
     $("archWrap").hidden = !s; $("fArch").checked = s ? !!s.archived : false;
     $("edDelete").hidden = !s;
+    SHARED_IDS.forEach(function (id) { var e = $(id); if (e) e.disabled = false; });
+    document.querySelectorAll(".lang-tab").forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-l") === "en"); });
+    $("edLangNote").hidden = true;
+    loadLangFields("en");
     $("scrim").classList.add("open"); $("editor").classList.add("open");
     setTimeout(function () { $("fRef").focus(); }, 260);
   }
@@ -604,29 +649,35 @@
     $("scrim").classList.remove("open"); $("editor").classList.remove("open"); editing = null;
   }
   function save() {
+    saveLangFields(edLang);
     var ref = clean($("fRef").value).toUpperCase();
-    if (!ref) { $("edErr").textContent = "A tracking number is required."; $("fRef").focus(); return; }
-    var payload = {
+    if (!ref) { switchEditorLang("en"); $("edErr").textContent = "A tracking number is required."; $("fRef").focus(); return; }
+    Object.keys(edData.translations).forEach(function (l) { if (!edData.translations[l] || !Object.keys(edData.translations[l]).length) delete edData.translations[l]; });
+    var base = {
       reference: ref,
-      status: clean($("fStatus").value) || "IN TRANSIT",
+      status: edData.status || "IN TRANSIT",
       step: Math.max(1, Math.min(5, parseInt($("fStep").value, 10) || 2)),
-      origin: clean($("fOrigin").value),
-      destination: clean($("fDest").value),
-      location: clean($("fLoc").value),
-      eta: $("fEta").value || null,
-      note: clean($("fNote").value),
+      origin: edData.origin, destination: edData.destination, location: edData.location,
+      eta: $("fEta").value || null, note: edData.note,
       archived: editing ? $("fArch").checked : false
     };
+    var payload = {}; for (var k in base) payload[k] = base[k];
+    var hasTr = Object.keys(edData.translations).length > 0;
+    if (hasTr) payload.translations = edData.translations; // only touch the column when there are translations
     $("edSave").disabled = true; $("edErr").textContent = "";
-    var req = editing
-      ? api("PATCH", "shipments?id=eq." + encodeURIComponent(editing.id), payload)
-      : api("POST", "shipments", payload);
-    req.then(function () {
+    function doSave(p) { return editing ? api("PATCH", "shipments?id=eq." + encodeURIComponent(editing.id), p) : api("POST", "shipments", p); }
+    function onSaved(noTr) {
+      var wasEditing = editing;
       $("edSave").disabled = false; closeEditor();
-      toast(editing ? "Saved — live on the site" : "Published — live on the site", "ok");
+      toast(noTr ? "Saved — run the translations migration to store French (admin/SETUP.md)" : (wasEditing ? "Saved — live on the site" : "Published — live on the site"), noTr ? "bad" : "ok");
       loadShipments();
-    }).catch(function (e) {
-      $("edSave").disabled = false; $("edErr").textContent = e.message || "Could not save.";
+    }
+    function onErr(e) { $("edSave").disabled = false; $("edErr").textContent = (e && e.message) || "Could not save."; }
+    doSave(payload).then(function () { onSaved(false); }).catch(function (e) {
+      var m = (e && e.message) || "";
+      if (/translations/i.test(m) && /(column|schema cache|does not exist|could not find)/i.test(m)) {
+        doSave(base).then(function () { onSaved(true); }).catch(onErr);
+      } else { onErr(e); }
     });
   }
   function toggleArchive(s) {
@@ -678,6 +729,9 @@
   $("edSave").addEventListener("click", save);
   $("edDelete").addEventListener("click", function () { if (editing) del(editing); });
   $("frmEdit").addEventListener("submit", function (e) { e.preventDefault(); save(); });
+  document.querySelectorAll(".lang-tab").forEach(function (b) {
+    b.addEventListener("click", function () { switchEditorLang(b.getAttribute("data-l")); });
+  });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeEditor(); });
 
   document.querySelectorAll(".tab").forEach(function (t) {

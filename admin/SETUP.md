@@ -36,6 +36,12 @@ Row-Level-Security rules allow: read live shipments, and add a newsletter email.
    and click **Run**. This creates the tables, the security rules, and three
    sample shipments.
 
+> **Multilingual note:** the script includes a `translations` column used to
+> store per-language versions of each shipment (French, etc.). If your database
+> was created *before* multilingual support, just run the script again — it's
+> safe to re-run and only adds the missing column. Without it, statuses still
+> auto-translate, but you can't save custom French text per shipment.
+
 ### 3. Create the admin login
 1. Left sidebar → **Authentication** → **Users** → **Add user** → **Create new user**.
 2. Email: the client's address (e.g. `admin@clcongo.com`).

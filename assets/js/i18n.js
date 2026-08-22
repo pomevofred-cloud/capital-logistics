@@ -73,6 +73,7 @@
   function setLang(lang) {
     try { localStorage.setItem(KEY, lang); } catch (e) {}
     apply(lang);
+    try { window.dispatchEvent(new CustomEvent("cl:langchange", { detail: lang })); } catch (e) {}
   }
 
   function initialLang() {

@@ -21,17 +21,22 @@
     });
   }
 
+  var lastRef = null, lastRec = null; // remembered so we can re-render on language change
+
   function render(ref, rec) {
+    lastRef = ref; lastRec = rec;
+    var loc = window.CL_localizeShipment ? window.CL_localizeShipment(rec) : rec;
     document.getElementById("trkRef").textContent = ref;
-    document.getElementById("trkId").textContent = rec.origin + " → " + rec.destination;
-    document.getElementById("trkStatus").textContent = rec.status;
+    document.getElementById("trkId").textContent = loc.origin + " → " + loc.destination;
+    document.getElementById("trkStatus").textContent = loc.status;
     document.querySelectorAll("#trkTimeline .tl-step").forEach(function (el, i) {
-      el.classList.toggle("done", i < rec.step);
+      el.classList.toggle("done", i < loc.step);
     });
     paint();
   }
 
   function notFound(ref) {
+    lastRef = ref; lastRec = null;
     document.getElementById("trkRef").textContent = ref;
     document.getElementById("trkId").textContent = fr()
       ? "Aucun envoi trouvé — vérifiez le numéro ou contactez votre gestionnaire."
@@ -63,5 +68,11 @@
       input.value = b.getAttribute("data-ref");
       show(b.getAttribute("data-ref"));
     });
+  });
+
+  /* re-render the current result when the visitor switches language */
+  window.addEventListener("cl:langchange", function () {
+    if (lastRef == null) return;
+    if (lastRec) render(lastRef, lastRec); else notFound(lastRef);
   });
 })();

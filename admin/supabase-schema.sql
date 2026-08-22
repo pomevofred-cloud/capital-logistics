@@ -15,10 +15,14 @@ create table if not exists public.shipments (
   location     text        default '',
   eta          date,
   note         text        default '',
+  translations jsonb       not null default '{}',   -- per-language overrides, e.g. {"fr":{"status":"EN TRANSIT","origin":"…"}}
   archived     boolean     not null default false,
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now()
 );
+
+-- Migration for a database created before multilingual support (safe to re-run):
+alter table public.shipments add column if not exists translations jsonb not null default '{}';
 
 create index if not exists shipments_reference_idx on public.shipments (reference);
 create index if not exists shipments_updated_idx   on public.shipments (updated_at desc);

@@ -2,12 +2,28 @@
    Read-only: fetches ONE shipment by its reference number. When no backend
    is configured it falls back to built-in demo records so the sample
    tracking numbers on the site keep working. Every downstream renderer uses
-   textContent, so database values can never inject markup. */
+   textContent, so database values can never inject markup.
+
+   Multilingual: a shipment may carry a `translations` object,
+   e.g. { fr: { status, origin, destination, location, note } }, managed from
+   the CMS. CL_localizeShipment() returns a copy in the requested language,
+   using those overrides first, then auto-translating standard statuses, then
+   falling back to the base (English) value — so one language never overwrites
+   another and untranslated fields still display. */
 (function () {
   "use strict";
   var cfg = window.CL_SUPABASE || {};
   var LIVE = !!(cfg.url && cfg.anonKey);
   var BASE = (cfg.url || "").replace(/\/+$/, "");
+
+  /* standard-status auto-translation (used when a record has no explicit override) */
+  var STATUS_I18N = {
+    fr: {
+      "PICKED UP": "ENLEVÉ", "IN TRANSIT": "EN TRANSIT", "AT CUSTOMS": "EN DOUANE",
+      "OUT FOR DELIVERY": "EN LIVRAISON", "DELIVERED": "LIVRÉ", "DELAYED": "RETARDÉ",
+      "ON HOLD": "EN ATTENTE", "EXCEPTION": "EXCEPTION"
+    }
+  };
 
   var DEMO = {
     "CL-2024-001234": { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03", step: 2, location: "N1 corridor" },
@@ -25,10 +41,42 @@
       step: Math.max(1, Math.min(5, parseInt(row.step, 10) || 2)),
       location: row.location || "",
       eta: row.eta || "",
-      note: row.note || ""
+      note: row.note || "",
+      translations: (row.translations && typeof row.translations === "object") ? row.translations : {}
     };
   }
   function demo(ref) { return DEMO[ref] ? norm(DEMO[ref], ref) : null; }
+
+  function curLang() {
+    try { return localStorage.getItem("cl_lang") === "fr" ? "fr" : "en"; } catch (e) { return "en"; }
+  }
+
+  /* return a copy of the record rendered in `lang` (defaults to the saved language) */
+  window.CL_localizeShipment = function (rec, lang) {
+    if (!rec) return rec;
+    lang = lang || curLang();
+    var tr = (rec.translations && rec.translations[lang]) || {};
+    function pick(field) {
+      return (tr[field] != null && String(tr[field]).trim() !== "") ? tr[field] : rec[field];
+    }
+    var status = pick("status");
+    if (lang !== "en" && !(tr.status && String(tr.status).trim())) {
+      var map = STATUS_I18N[lang];
+      var up = (rec.status || "").toUpperCase();
+      if (map && map[up]) status = map[up];
+    }
+    return {
+      reference: rec.reference,
+      status: status,
+      origin: pick("origin"),
+      destination: pick("destination"),
+      step: rec.step,
+      location: pick("location"),
+      eta: rec.eta,
+      note: pick("note"),
+      translations: rec.translations
+    };
+  };
 
   function fetchLive(ref) {
     var url = BASE + "/rest/v1/shipments?select=*&archived=eq.false&reference=eq." +
@@ -53,6 +101,6 @@
     return Promise.resolve(demo(ref));
   };
   window.CL_defaultShipment = function () {
-    return { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03", step: 2, location: "" };
+    return { status: "IN TRANSIT", origin: "Matadi Port Terminal", destination: "Kinshasa Warehouse 03", step: 2, location: "", translations: {} };
   };
 })();
