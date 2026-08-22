@@ -1,6 +1,5 @@
 Capital Logistics — deployment marker
-build: 2026-08-21.7
-generated: 2026-08-22T15:48:46Z
+build: 2026-08-21.8
+generated: 2026-08-22T21:24:58Z
 
-Open  YOURDOMAIN/version.txt  — if it shows this build number, the latest
-changes are live. Assets are cache-busted, so browsers always load the new design.
+Open  YOURDOMAIN/version.txt  to confirm the latest build is live.
